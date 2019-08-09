@@ -80,6 +80,13 @@ export default class SignUp extends Component {
                 .collection("users")
                 .doc(this.state.username)
                 .set(this.state);
+              firestore
+                .collection("publicUsers")
+                .doc(this.state.username)
+                .set({
+                  username: this.state.username,
+                  name: this.state.name
+                });
             }}
             title="Add the user"
             color="#841584"
