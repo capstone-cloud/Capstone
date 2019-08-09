@@ -1,13 +1,18 @@
-import React, { Component } from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  View,
-  TextInput,
-  Button
-} from "react-native";
-import { firestore } from "../../fire";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import SignUp from "./SignUp";
+import Loading from "./Loading";
+
+const MainNavigator = createStackNavigator({
+  Loading: { screen: Loading },
+  Signup: { screen: SignUp }
+});
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
 
 // export default function App() {
 //   return (
@@ -20,77 +25,17 @@ import { firestore } from "../../fire";
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: 'pink',
+//     backgroundColor: "pink",
 //     borderRadius: 4,
 //     borderWidth: 0.5,
-//     borderColor: 'white',
-//     alignItems: 'center',
-//     justifyContent: 'center'
+//     borderColor: "white",
+//     alignItems: "center",
+//     justifyContent: "center"
 //   },
 //   title: {
-//     color: 'yellow',
-//     fontWeight: 'bold',
+//     color: "yellow",
+//     fontWeight: "bold",
 //     fontSize: 40,
 //     paddingBottom: 30
 //   }
 // });
-
-export default class App extends Component {
-  state = {
-    username: "",
-    name: ""
-  };
-
-  render() {
-    const { username, name } = this.state;
-
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            value={username}
-            placeholder="username"
-            style={styles.textInput}
-            onChangeText={value => this.setState({ username: value })}
-          />
-          <TextInput
-            value={name}
-            placeholder="name"
-            style={styles.textInput}
-            onChangeText={value => this.setState({ name: value })}
-          />
-          <Button
-            onPress={() => {
-              alert("Add the user");
-              firestore
-                .collection("users")
-                .doc("fuckmylifeonemoretime")
-                .set(this.state);
-            }}
-            title="Add the user"
-            color="#841584"
-          />
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F5FCFF"
-  },
-  inputContainer: {
-    margin: 30
-  },
-  textInput: {
-    height: 30,
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 10,
-    fontSize: 24,
-    borderWidth: 1,
-    borderBottomColor: "#111111"
-  }
-});
