@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
+
+import styles from './Style'
 
 export default class Loading extends Component {
   static navigationOptions = {
@@ -13,6 +15,12 @@ export default class Loading extends Component {
         <Button
           style={styles.button}
           color="yellow"
+          title="Log In"
+          onPress={() => navigate("Login")}
+        />
+        <Button
+          style={styles.button}
+          color="yellow"
           title="Sign Up"
           onPress={() => navigate("Signup")}
         />
@@ -21,20 +29,4 @@ export default class Loading extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "pink",
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: "white",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  title: {
-    color: "yellow",
-    fontWeight: "bold",
-    fontSize: 40,
-    paddingBottom: 30
-  }
-});
+
