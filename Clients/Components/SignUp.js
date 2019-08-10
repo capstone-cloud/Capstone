@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import UserPage from './UserPage';
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,25 +7,25 @@ import {
   View,
   TextInput,
   Button
-} from "react-native";
-import styles from './Style'
-import { firestore } from "../../fire";
+} from 'react-native';
+import styles from './Style';
+import { firestore } from '../../fire';
 
 export default class SignUp extends Component {
   state = {
-    username: "",
-    name: "",
-    password: "",
-    phone: ""
+    username: '',
+    name: '',
+    password: '',
+    phone: ''
   };
 
   render() {
     const { username, name, password, phone } = this.state;
-
+    const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
-        <Text>Sign Up</Text>
+          <Text>Sign Up</Text>
           <TextInput
             value={username}
             placeholder="username"
@@ -51,20 +52,21 @@ export default class SignUp extends Component {
           />
           <Button
             onPress={() => {
-              alert("Add the user");
+              alert('User successfully added!');
               firestore
-                .collection("users")
+                .collection('users')
                 .doc(this.state.username)
                 .set(this.state);
               firestore
-                .collection("publicUsers")
+                .collection('publicUsers')
                 .doc(this.state.username)
                 .set({
                   username: this.state.username,
                   name: this.state.name
                 });
+              navigate('UserPage');
             }}
-            title="Add the user"
+            title="Add User"
             color="#841584"
           />
         </View>
