@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { SafeAreaView, Text, View, TextInput, Button } from 'react-native';
-import styles from './Style';
-import { firestore } from '../../fire';
+import React, { Component } from "react";
+import { SafeAreaView, Text, View, TextInput, Button } from "react-native";
+import styles from "./Style";
+import { firestore } from "../../fire";
 
 export default class UserPage extends Component {
     static navigationOptions = {
@@ -20,7 +20,16 @@ export default class UserPage extends Component {
           title="Groups"
           color="white"
         />
+        <Button
+          onPress={() => {
+            navigate("Events");
+          }}
+          title="Events"
+          color="white"
+        />
       </View>
     );
   }
 }
+
+
