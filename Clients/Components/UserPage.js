@@ -3,21 +3,33 @@ import { SafeAreaView, Text, View, TextInput, Button } from "react-native";
 import styles from "./Style";
 import { firestore } from "../../fire";
 
-const UserPage = props => {
-  const { navigate } = props.navigation;
-  console.log(props);
-  return (
-    <View style={styles.container}>
-      <Text style={styles.userPage}>Welcome</Text>
-      <Button
-        style={styles.userPage}
-        onPress={() => {
-          navigate("Events");
-        }}
-        title="Groups"
-        color="white"
-      />
-    </View>
-  );
-};
-export default UserPage;
+export default class UserPage extends Component {
+    static navigationOptions = {
+        title: 'Welcome'
+      };
+    
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.userPage}>Welcome</Text>
+        <Button
+          onPress={() => {
+            navigate('Groups');
+          }}
+          title="Groups"
+          color="white"
+        />
+        <Button
+          onPress={() => {
+            navigate("Events");
+          }}
+          title="Events"
+          color="white"
+        />
+      </View>
+    );
+  }
+}
+
+

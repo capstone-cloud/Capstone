@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, Text, View, TextInput, Button } from 'react-native';
 import styles from './Style';
 import { firestore } from '../../fire';
+import AddGroupForm from './AddGroupForm';
 
 export default class LogIn extends Component {
   state = {
@@ -16,6 +17,7 @@ export default class LogIn extends Component {
     const { username, password } = this.state;
     const { navigate } = this.props.navigation;
     return (
+    
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
           <Text>Log In</Text>
@@ -31,6 +33,7 @@ export default class LogIn extends Component {
             style={styles.textInput}
             onChangeText={value => this.setState({ password: value })}
           />
+          
           <Button
             onPress={() => {
               // alert("Signed In!");
@@ -50,7 +53,9 @@ export default class LogIn extends Component {
             title="Sign In"
             color="#841584"
           />
+          
         </View>
+        
       </SafeAreaView>
     );
   }
