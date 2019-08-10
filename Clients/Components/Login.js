@@ -1,27 +1,24 @@
-import React, { Component } from "react";
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TextInput,
-  Button
-} from "react-native";
-import styles from './Style'
-import { firestore } from "../../fire";
+import React, { Component } from 'react';
+import { SafeAreaView, Text, View, TextInput, Button } from 'react-native';
+import styles from './Style';
+import { firestore } from '../../fire';
 
 export default class LogIn extends Component {
   state = {
-    username: "",
-    password: ""
+    username: '',
+    password: ''
+  };
+  static navigationOptions = {
+    title: 'Welcome'
   };
 
   render() {
     const { username, password } = this.state;
-
+    const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
-        <Text>Log In</Text>
+          <Text>Log In</Text>
           <TextInput
             value={username}
             placeholder="username"
@@ -36,20 +33,21 @@ export default class LogIn extends Component {
           />
           <Button
             onPress={() => {
-              alert("Add the user");
-            //   firestore
-            //     .collection("users")
-            //     .doc(this.state.username)
-            //     .set(this.state);
-            //   firestore
-            //     .collection("publicUsers")
-            //     .doc(this.state.username)
-            //     .set({
-            //       username: this.state.username,
-            //       name: this.state.name
-            //     });
+              // alert("Signed In!");
+              navigate('UserPage');
+              //   firestore
+              //     .collection("users")
+              //     .doc(this.state.username)
+              //     .set(this.state);
+              //   firestore
+              //     .collection("publicUsers")
+              //     .doc(this.state.username)
+              //     .set({
+              //       username: this.state.username,
+              //       name: this.state.name
+              //     });
             }}
-            title="Add the user"
+            title="Sign In"
             color="#841584"
           />
         </View>
