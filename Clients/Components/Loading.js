@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import React, { Component } from "react";
+import { Text, View, Button } from "react-native";
 
-import styles from './Style';
+import styles from "./Style";
 
 export default class Loading extends Component {
   static navigationOptions = {
-    title: 'Welcome'
+    title: "Welcome"
   };
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -16,13 +17,13 @@ export default class Loading extends Component {
           style={styles.button}
           color="yellow"
           title="Log In"
-          onPress={() => navigate('Login')}
+          onPress={() => navigate("Login")}
         />
         <Button
           style={styles.button}
           color="yellow"
           title="Sign Up"
-          onPress={() => navigate('Signup')}
+          onPress={() => navigate("Signup")}
         />
       </View>
     );
