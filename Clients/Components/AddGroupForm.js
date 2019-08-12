@@ -42,14 +42,14 @@ export default class AddGroupForm extends Component {
               alert('Group successfully added!');
               firestore
                 .collection('publicUsers')
-                .doc("rameen98")
+                .doc('rameen98')
                 .collection('groups')
                 .doc(this.state.groupname)
                 .set(this.state);
               navigate('Groups');
             }}
             title="Add Group"
-            color="#841584"
+            color="black"
           />
         </View>
       </SafeAreaView>
