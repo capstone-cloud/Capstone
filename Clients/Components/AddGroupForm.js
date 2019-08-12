@@ -41,11 +41,12 @@ export default class AddGroupForm extends Component {
             onPress={() => {
               alert('Group successfully added!');
               firestore
-                .collection('publicUsers')
-                .doc('rameen98')
                 .collection('groups')
-                .doc(this.state.groupname)
-                .set(this.state);
+
+                .add(this.state)
+                .then(docSnapshot => {
+                  console.log(docSnapshot.id);
+                });
               navigate('Groups');
             }}
             title="Add Group"
