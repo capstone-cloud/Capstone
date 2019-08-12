@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,20 +6,20 @@ import {
   View,
   TextInput,
   Button
-} from 'react-native';
-import styles from './Style';
-import { firestore } from '../../fire';
+} from "react-native";
+import styles from "./Style";
+import { firestore } from "../../fire";
 
 export default class AddGroupForm extends Component {
   state = {
-    groupname: '',
-    members: ''
+    groupname: "",
+    members: ""
   };
 
   render() {
-    const { username } = this.props;
     const { name, members } = this.state;
     const { navigate } = this.props.navigation;
+
     return (
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
@@ -39,15 +39,22 @@ export default class AddGroupForm extends Component {
 
           <Button
             onPress={() => {
-              alert('Group successfully added!');
+              alert("Group successfully added!");
               firestore
-                .collection('groups')
+                .collection("groups")
 
                 .add(this.state)
                 .then(docSnapshot => {
-                  console.log(docSnapshot.id);
+                  firestore
+                    .collection("publicUsers")
+                    .doc(this.props.navigation.getParam("userId"))
+                    .update({
+                      myGroups: firebase.firestore.FieldValue.arrayUnion(
+                        docSnapshot.id
+                      )
+                    });
                 });
-              navigate('Groups');
+              navigate("Groups");
             }}
             title="Add Group"
             color="black"

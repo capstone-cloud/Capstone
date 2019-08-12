@@ -20,19 +20,31 @@ export default class Groups extends Component {
     };
     this.ref = firestore
       .collection("publicUsers")
-      .doc("rameen98")
-      .collection("groups");
+      .doc(this.props.navigation.getParam("userId"));
   }
   componentDidMount() {
     this.ref
       .get()
-      .then(snapshot => {
+      .then(doc => {
         const groups = [];
-        snapshot.forEach(doc => {
-          console.log(doc.id, "=>", doc.data());
-          groups.push([doc.id, doc.data()]);
+        doc.data().myGroups.forEach(group => {
+          groups.push(group.id);
         });
-        this.setState({ groups: groups });
+        console.log(groups);
+        groups.forEach(group => {
+          firestore
+            .collection("groups")
+            .doc(group)
+            .get()
+            .then(retrieved => {
+              this.setState({
+                groups: [
+                  ...this.state.groups,
+                  { id: group.id, data: retrieved.data() }
+                ]
+              });
+            });
+        });
       })
       .catch(err => {
         console.log("Error", err);
@@ -49,11 +61,11 @@ export default class Groups extends Component {
           {this.state.groups.map((group, i) => (
             <ListItem
               key={i}
-              title={group[1].groupname}
-              subtitle={group[1].members}
+              title={group.data.groupname}
+              subtitle={group.data.members}
               onPress={() => {
                 navigate("Events", {
-                  groupId: group[0]
+                  groupId: group.id
                 });
               }}
             />
@@ -61,7 +73,9 @@ export default class Groups extends Component {
         </Card>
         <Button
           onPress={() => {
-            navigate("AddGroupForm");
+            navigate("AddGroupForm", {
+              userId: this.props.navigation.getParam("userId")
+            });
           }}
           title="Add a group"
           color="black"
