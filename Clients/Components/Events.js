@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Button } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ListItem, Card } from "react-native-elements";
 import { firestore } from "../../fire";
 
 export default class Events extends Component {
@@ -13,7 +13,7 @@ export default class Events extends Component {
       .collection("publicUsers")
       .doc("rameen98")
       .collection("groups")
-      .doc("NRMe24IJliDlQZmS0ScJ")
+      .doc(this.props.navigation.getParam("groupId", "NO-ID"))
       .collection("events");
   }
 
@@ -42,19 +42,21 @@ export default class Events extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        {this.state.events.map((event, i) => (
-          <ListItem
-            key={i}
-            leftAvatar={{
-              source: {
-                uri:
-                  "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-              }
-            }}
-            title={event.name}
-            subtitle={`$${event.total}`}
-          />
-        ))}
+        <Card>
+          {this.state.events.map((event, i) => (
+            <ListItem
+              key={i}
+              leftAvatar={{
+                source: {
+                  uri:
+                    "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+                }
+              }}
+              title={event.name}
+              subtitle={`$${event.total}`}
+            />
+          ))}
+        </Card>
       </View>
     );
   }

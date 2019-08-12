@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import UserPage from './UserPage';
+import React, { Component } from "react";
+import UserPage from "./UserPage";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,10 +7,10 @@ import {
   View,
   TextInput,
   Button
-} from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
-import styles from './Style';
-import { firestore } from '../../fire';
+} from "react-native";
+import { ListItem, Card } from "react-native-elements";
+import styles from "./Style";
+import { firestore } from "../../fire";
 
 export default class Groups extends Component {
   constructor(props) {
@@ -19,9 +19,9 @@ export default class Groups extends Component {
       groups: []
     };
     this.ref = firestore
-      .collection('publicUsers')
-      .doc('rameen98')
-      .collection('groups');
+      .collection("publicUsers")
+      .doc("rameen98")
+      .collection("groups");
   }
   componentDidMount() {
     this.ref
@@ -29,13 +29,13 @@ export default class Groups extends Component {
       .then(snapshot => {
         const groups = [];
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
-          groups.push(doc.data());
+          console.log(doc.id, "=>", doc.data());
+          groups.push([doc.id, doc.data()]);
         });
         this.setState({ groups: groups });
       })
       .catch(err => {
-        console.log('Error', err);
+        console.log("Error", err);
       });
   }
 
@@ -49,14 +49,19 @@ export default class Groups extends Component {
           {this.state.groups.map((group, i) => (
             <ListItem
               key={i}
-              title={group.groupname}
-              subtitle={group.members}
+              title={group[1].groupname}
+              subtitle={group[1].members}
+              onPress={() => {
+                navigate("Events", {
+                  groupId: group[0]
+                });
+              }}
             />
           ))}
         </Card>
         <Button
           onPress={() => {
-            navigate('AddGroupForm');
+            navigate("AddGroupForm");
           }}
           title="Add a group"
           color="black"
