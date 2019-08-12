@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import UserPage from './UserPage';
+import React, { Component } from "react";
+import UserPage from "./UserPage";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,16 +7,16 @@ import {
   View,
   TextInput,
   Button
-} from 'react-native';
-import styles from './Style';
-import { firestore } from '../../fire';
+} from "react-native";
+import styles from "./Style";
+import { firestore } from "../../fire";
 
 export default class SignUp extends Component {
   state = {
-    username: '',
-    name: '',
-    password: '',
-    phone: ''
+    username: "",
+    name: "",
+    password: "",
+    phone: ""
   };
 
   render() {
@@ -52,20 +52,20 @@ export default class SignUp extends Component {
           />
           <Button
             onPress={() => {
-              alert('User successfully added!');
+              alert("User successfully added!");
               firestore
-                .collection('users')
+                .collection("users")
                 .doc(this.state.username)
                 .set(this.state);
               firestore
-                .collection('publicUsers')
+                .collection("publicUsers")
                 .doc(this.state.username)
                 .set({
                   username: this.state.username,
                   name: this.state.name,
-                  groupId: []
+                  myGroups: []
                 });
-              navigate('UserPage');
+              navigate("UserPage");
             }}
             title="Add User"
             color="#841584"

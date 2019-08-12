@@ -4,10 +4,10 @@ import styles from "./Style";
 import { firestore } from "../../fire";
 
 export default class UserPage extends Component {
-    static navigationOptions = {
-        title: 'Welcome'
-      };
-    
+  static navigationOptions = {
+    title: "Welcome"
+  };
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -15,7 +15,9 @@ export default class UserPage extends Component {
         <Text style={styles.userPage}>Welcome</Text>
         <Button
           onPress={() => {
-            navigate('Groups');
+            navigate("Groups", {
+              userId: this.props.navigation.getParam("userId")
+            });
           }}
           title="Groups"
           color="white"
@@ -31,5 +33,3 @@ export default class UserPage extends Component {
     );
   }
 }
-
-
