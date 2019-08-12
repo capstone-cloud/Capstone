@@ -18,11 +18,12 @@ export default class Groups extends Component {
     this.state = {
       groups: []
     };
+    this.userId = this.props.navigation.getParam("userId");
     this.ref = firestore
-      .collection("publicUsers")
-      .doc("rameen98")
-      .collection("groups");
+      .collection("groups")
+      .where("members", "array-contains", this.userId);
   }
+
   componentDidMount() {
     this.ref
       .get()

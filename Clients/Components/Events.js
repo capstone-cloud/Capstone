@@ -10,11 +10,9 @@ export default class Events extends Component {
       events: []
     };
     this.ref = firestore
-      .collection("publicUsers")
-      .doc("rameen98")
       .collection("groups")
-      .doc(this.props.navigation.getParam("groupId", "NO-ID"))
-      .collection("events");
+      .doc(this.props.navigation.getParam("groupId"))
+      .collection("Events");
   }
 
   static navigationOptions = {
@@ -22,6 +20,7 @@ export default class Events extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.navigation.getParam("groupId"));
     this.ref
       .get()
       .then(snapshot => {
@@ -31,6 +30,7 @@ export default class Events extends Component {
           events.push(doc.data());
         });
         this.setState({ events: events });
+        console.log(this.state);
       })
       .catch(err => {
         console.log("Error getting documents", err);
