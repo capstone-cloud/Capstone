@@ -4,11 +4,18 @@ import styles from './Style';
 import { firestore } from '../../fire';
 import AddGroupForm from './AddGroupForm';
 
+
+
+
 export default class LogIn extends Component {
-  state = {
-    username: '',
-    password: ''
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    };
+  }
+
   static navigationOptions = {
     title: 'Welcome'
   };
@@ -35,9 +42,27 @@ export default class LogIn extends Component {
           />
           
           <Button
-            onPress={() => {
-              // alert("Signed In!");
-              navigate('UserPage');
+            onPress={ () => {
+  
+              const userRef = firestore.collection('users').doc(`${this.state.username}`);
+              
+              userRef.get()
+                .then((docSnapshot) => {
+                  if (docSnapshot.exists) {
+                    userRef.onSnapshot((doc) => {
+                      if (this.state.password !== doc.data().password) {
+                        alert("Wrong log-in info!")
+                      } else {
+                        alert("Signed In!");
+                        navigate('UserPage');
+                      }
+                    });      
+                  } else {
+                    alert("User does not exist")
+                  }
+                }).catch((error) => {console.error(error)})
+
+
               //   firestore
               //     .collection("users")
               //     .doc(this.state.username)
