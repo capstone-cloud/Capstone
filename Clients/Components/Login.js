@@ -52,7 +52,7 @@ export default class LogIn extends Component {
                         alert("Wrong log-in info!");
                       } else {
                         alert("Signed In!");
-                        navigate("UserPage", {
+                        navigate("Groups", {
                           userId: doc.id
                         });
                       }
