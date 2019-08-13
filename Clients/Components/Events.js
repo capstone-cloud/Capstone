@@ -7,57 +7,49 @@ export default class Events extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      events: [],
+      groupname:''
     };
-    this.ref = firestore
-      .collection("publicUsers")
-      .doc("rameen98")
-      .collection("groups")
-      .doc(this.props.navigation.getParam("groupId", "NO-ID"))
-      .collection("events");
   }
 
-  static navigationOptions = {
-    title: "Every Friday"
-  };
-
   componentDidMount() {
-    this.ref
+    this.setState({groupname: this.props.navigation.getParam("groupname")})
+    firestore.collection('events')
+      .where('groupId', '==', this.props.navigation.getParam("groupId"))  
       .get()
-      .then(snapshot => {
-        const events = [];
-        snapshot.forEach(doc => {
-          console.log(doc.id, "=>", doc.data());
-          events.push(doc.data());
-        });
-        this.setState({ events: events });
-      })
-      .catch(err => {
-        console.log("Error getting documents", err);
-      });
+      .then(docs => docs.forEach(doc => {
+        this.setState({events: [...this.state.events, {id: doc.id, data:doc.data()}]})
+      }))
   }
 
   render() {
-    console.log("is this happending");
-    const { navigate } = this.props.navigation;
-    return (
+    const { navigate } = this.props.navigation;   
+    return(
       <View>
-        <Card>
+        <Text>{this.state.groupname}</Text>
+        <Card title="EVENTS">
           {this.state.events.map((event, i) => (
             <ListItem
               key={i}
-              leftAvatar={{
-                source: {
-                  uri:
-                    "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-                }
+              title={event.data.eventname}
+              onPress={() => {
+                navigate("Items", {
+                  eventId: event.id
+                })
               }}
-              title={event.name}
-              subtitle={`$${event.total}`}
             />
           ))}
-        </Card>
+          </Card>
+        <Button
+          onPress={() => {
+            navigate("AddEventForm", {
+              groupId: this.props.navigation.getParam("groupId")
+            })
+          }}
+          title="Add an event"
+          color="black"
+          />
       </View>
-    );
-  }
+    )
+}
 }

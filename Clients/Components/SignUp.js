@@ -62,8 +62,7 @@ export default class SignUp extends Component {
                 .doc(this.state.username)
                 .set({
                   username: this.state.username,
-                  name: this.state.name,
-                  myGroups: []
+                  name: this.state.name
                 });
               navigate("UserPage");
             }}
