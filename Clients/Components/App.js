@@ -10,6 +10,8 @@ import UserPage from './UserPage';
 import Groups from './Groups'
 import AddGroupForm from './AddGroupForm';
 import Events from "./Events";
+import AddEventForm from "./AddEventForm"
+import Items from "./Items"
 
 const MainNavigator = createStackNavigator({
   Loading: { screen: Loading },
@@ -18,7 +20,9 @@ const MainNavigator = createStackNavigator({
   UserPage: { screen: UserPage },
   Groups: { screen: Groups },
   AddGroupForm: {screen: AddGroupForm},
-  Events: { screen: Events }
+  Events: { screen: Events },
+  AddEventForm: {screen:AddEventForm},
+  Items: {screen: Items}
   },
   {
     defaultNavigationOptions: {

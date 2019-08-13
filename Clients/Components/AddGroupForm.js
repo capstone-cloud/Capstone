@@ -10,10 +10,12 @@ import {
 import styles from "./Style";
 import { firestore } from "../../fire";
 
+
 export default class AddGroupForm extends Component {
   state = {
     groupname: "",
-    members: ""
+    members: [this.props.navigation.getParam("userId")],
+    memberToAdd: ""
   };
 
   render() {
@@ -24,40 +26,44 @@ export default class AddGroupForm extends Component {
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
           <Text>Add Group</Text>
+          <Text>Add Name</Text>
           <TextInput
-            value={name}
+            value={this.state.groupname}
+            defaultValue={this.state.groupname}
             placeholder="Group Name"
             style={styles.textInput}
             onChangeText={value => this.setState({ groupname: value })}
           />
+          <Text>Add Member</Text>
           <TextInput
-            value={members}
+            value={this.state.memberToAdd}
+            defaultValue=""
             placeholder="members"
             style={styles.textInput}
-            onChangeText={value => this.setState({ members: value })}
+            onChangeText={value => this.setState({memberToAdd: value})}
           />
-
           <Button
+            title='Add Another'
+            color="purple"
             onPress={() => {
-              alert("Group successfully added!");
-              firestore
-                .collection("groups")
-
-                .add(this.state)
-                .then(docSnapshot => {
-                  firestore
-                    .collection("publicUsers")
-                    .doc(this.props.navigation.getParam("userId"))
-                    .update({
-                      myGroups: firebase.firestore.FieldValue.arrayUnion(
-                        docSnapshot.id
-                      )
-                    });
-                });
-              navigate("Groups");
+              this.setState({members: [...this.state.members, this.state.memberToAdd]});
+              this.setState({memberToAdd: ""})
             }}
+            />
+          
+          <Text>Current Members:</Text>
+          <Text>{this.state.members.join(', ')}</Text>
+
+          <Button 
             title="Add Group"
-            color="black"
+            color="purple"
+            onPress={() => {
+              firestore.collection("groups").add({
+                groupname: this.state.groupname,
+                members: this.state.members
+              })
+              alert("Group Added")
+            }}
           />
         </View>
       </SafeAreaView>
