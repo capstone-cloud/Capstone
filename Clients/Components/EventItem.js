@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { View, Button, Animated } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import { ListItem } from "react-native-elements";
+import { ListItem, Icon } from "react-native-elements";
 
 class EventItem extends Component {
   constructor(props) {
@@ -15,9 +15,21 @@ class EventItem extends Component {
     });
 
     return (
-      <View onPress={this.close}>
+      <View 
+      onPress={this.close}
+      style={{
+        flex:0.3,
+        flexDirection:"row",
+        justifyContent: "space-around"
+      }}>
+        
         <RectButton
-          style={styles.leftAction}
+          style={{
+            flex:1,
+            flexDirection:"column",
+            justifyContent:"space-evenly"
+          }}
+          width="50%"
           backgroundColor="#FA8072"
           onPress={() => {
             this.props.navigate("Items", {
@@ -33,11 +45,19 @@ class EventItem extends Component {
               }
             ]}
           >
+          
             Items
+            
           </Animated.Text>
+          <Icon name="assignment"/>
         </RectButton>
         <RectButton
-          style={styles.leftAction}
+          style={{
+            flex:1,
+            flexDirection:"column",
+            justifyContent:"space-evenly"
+                  }}
+          width="50%"
           backgroundColor="pink"
           onPress={() => {
             this.props.navigate("UpdateEvent", {
@@ -56,8 +76,11 @@ class EventItem extends Component {
               }
             ]}
           >
+          
             Edit
+            
           </Animated.Text>
+          <Icon name="edit"/>
         </RectButton>
       </View>
     );
@@ -65,7 +88,10 @@ class EventItem extends Component {
   render() {
     return (
       <Swipeable renderRightActions={this.renderRightActions}>
-        <ListItem title={this.props.event.eventname} />
+        <ListItem 
+        title={this.props.event.eventname}
+        rightIcon={{name: 'more', color:"purple"} }
+         />
       </Swipeable>
     );
   }

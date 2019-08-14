@@ -13,6 +13,7 @@ import AddEventForm from "./AddEventForm";
 import Items from "./Items";
 import UpdateGroup from "./UpdateGroup";
 import UpdateEvent from "./UpdateEvent";
+import Chat from "./Chat"
 
 const MainNavigator = createStackNavigator(
   {
@@ -26,7 +27,8 @@ const MainNavigator = createStackNavigator(
     AddEventForm: { screen: AddEventForm },
     Items: { screen: Items },
     UpdateGroup: { screen: UpdateGroup },
-    UpdateEvent: { screen: UpdateEvent }
+    UpdateEvent: { screen: UpdateEvent },
+    Chat: {screen: Chat}
   },
   {
     defaultNavigationOptions: {

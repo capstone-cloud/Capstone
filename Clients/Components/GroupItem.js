@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { View, Button, Animated } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import { ListItem } from "react-native-elements";
+import { ListItem, Icon} from "react-native-elements";
+
+
 
 class GroupItem extends Component {
   constructor(props) {
@@ -15,17 +17,30 @@ class GroupItem extends Component {
     });
 
     return (
-      <View onPress={this.close}>
+      <View 
+      onPress={this.close}
+      style={{
+        flex:0.5,
+        flexDirection:"row",
+        justifyContent: "space-around"
+      }}>
         <RectButton
-          style={styles.leftAction}
+          style={{
+            flex:1,
+            flexDirection:"column",
+            justifyContent:"space-evenly"
+          }}
+          width="33%"
           backgroundColor="#FA8072"
           onPress={() => {
             this.props.navigate("Events", {
               groupId: this.props.id,
               groupname: this.props.group.groupname
             });
+          
           }}
         >
+          
           <Animated.Text
             style={[
               styles.actionText,
@@ -36,9 +51,12 @@ class GroupItem extends Component {
           >
             Events
           </Animated.Text>
+          <Icon name="assignment"/>
         </RectButton>
         <RectButton
-          style={styles.leftAction}
+          style={{flex:1,
+            flexDirection:"column",  justifyContent:"space-evenly"}}
+          width="33%"
           backgroundColor="pink"
           onPress={() => {
             this.props.navigate("UpdateGroup", {
@@ -48,6 +66,7 @@ class GroupItem extends Component {
             });
           }}
         >
+
           <Animated.Text
             style={[
               styles.actionText,
@@ -58,11 +77,16 @@ class GroupItem extends Component {
           >
             Edit
           </Animated.Text>
+          <Icon name="edit"/>
         </RectButton>
         <RectButton
-          style={styles.leftAction}
+          style={{flex:1, flexDirection:"column",  justifyContent:"space-evenly"}}
+          width="33%"
           backgroundColor="#87ceeb"
-          onPress={() => console.log("Chat")}
+          onPress={() => this.props.navigate("Chat", {
+            groupId: this.props.id,
+            user: this.props.user
+          })}
         >
           <Animated.Text
             style={[
@@ -74,16 +98,20 @@ class GroupItem extends Component {
           >
             Chat
           </Animated.Text>
+          <Icon name="chat"/>
         </RectButton>
       </View>
     );
   };
   render() {
     return (
-      <Swipeable renderRightActions={this.renderRightActions}>
+      <Swipeable 
+      renderRightActions={this.renderRightActions}
+      rightThreshold={0.001}>
         <ListItem
           title={this.props.group.groupname}
           subtitle={this.props.returnSubtitle(this.props.group.members)}
+          rightIcon={{name: 'more', color:"pink"} }
         />
       </Swipeable>
     );
