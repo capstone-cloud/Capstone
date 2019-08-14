@@ -56,10 +56,11 @@ export default class SignUp extends Component {
               if (email && password && username && name) {
                 firestore
                   .collection('publicUsers')
-                  .doc(username)
+                  .where('username', '==', username)
                   .get()
-                  .then(user => {
-                    if (user.exists) {
+                  .then(snapshot => {
+                    console.log(snapshot.docs.length);
+                    if (snapshot.docs.length) {
                       alert('Username already exists');
                       this.setState({
                         username: ''
@@ -68,7 +69,6 @@ export default class SignUp extends Component {
                       auth
                         .createUserWithEmailAndPassword(email, password)
                         .then(user => {
-                          console.log(auth.currentUser.uid);
                           firestore
                             .collection('publicUsers')
                             .doc(auth.currentUser.uid)
@@ -77,16 +77,16 @@ export default class SignUp extends Component {
                               name
                             });
                           navigate('Groups', {
-                            userId: username
+                            userId: auth.currentUser.uid
                           });
                         })
                         .catch(function(error) {
                           var errorMessage = error.message;
                           alert(errorMessage);
                         });
-                      console.log(auth.currentUser);
                     }
-                  });
+                  })
+                  .catch(error => alert(error.message));
               }
             }}
             title="Add User"

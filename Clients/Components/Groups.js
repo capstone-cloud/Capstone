@@ -15,7 +15,7 @@ import GroupItem from './GroupItem';
 
 export default class Groups extends Component {
   static navigationOptions = {
-    title: 'Groups',
+    title: 'Splitzies!',
     headerLeft: null
   };
   constructor(props) {
@@ -31,7 +31,7 @@ export default class Groups extends Component {
         .collection('publicUsers')
         .doc(this.props.navigation.getParam('userId', 'NO-ID'))
         .get();
-      console.log(user.data());
+
       return user.data().username;
     } catch (error) {
       console.error(error);
@@ -47,7 +47,6 @@ export default class Groups extends Component {
       .get()
       .then(docs =>
         docs.forEach(doc => {
-          console.log(doc.data());
           this.setState({
             groups: [...this.state.groups, { id: doc.id, data: doc.data() }]
           });
