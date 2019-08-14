@@ -58,7 +58,8 @@ export default class UpdateGroup extends Component {
             itemStyle={{
               color: "black",
               backgroundColor: "pink",
-              fontSize: 26
+              fontSize: 24,
+              height: "40%"
             }}
             selectedValue={this.state.memberToRemove}
             onValueChange={value => this.setState({ memberToRemove: value })}

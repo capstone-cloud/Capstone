@@ -6,12 +6,14 @@ import {
   Text,
   View,
   TextInput,
-  Button
-} from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
-import styles from './Style';
-import { firestore, auth } from '../../fire';
-import GroupItem from './GroupItem';
+  Button, 
+  ScrollView
+} from "react-native";
+import { ListItem, Card } from "react-native-elements";
+import styles from "./Style";
+import { firestore } from "../../fire";
+import GroupItem from "./GroupItem";
+
 
 export default class Groups extends Component {
   static navigationOptions = {
@@ -66,7 +68,7 @@ export default class Groups extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View>
+      <ScrollView>
         <Text style={styles.userPage}>Groups</Text>
         <Card title="GROUPS">
           {this.state.groups.map((group, i) => (
@@ -76,6 +78,7 @@ export default class Groups extends Component {
               group={group.data}
               returnSubtitle={this.returnSubtitle}
               navigate={navigate}
+              user={this.props.navigation.getParam("userId")}
             />
           ))}
         </Card>
@@ -102,7 +105,7 @@ export default class Groups extends Component {
           }}
           title="Sign Out"
         />
-      </View>
+      </ScrollView>
     );
   }
 }

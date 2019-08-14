@@ -85,7 +85,8 @@ export default class UpdateEvent extends Component {
             itemStyle={{
               color: "black",
               backgroundColor: "pink",
-              fontSize: 26
+              fontSize: 26,
+              height: "40%"
             }}
             selectedValue={this.state.itemToRemove}
             onValueChange={value => this.setState({ itemToRemove: value })}

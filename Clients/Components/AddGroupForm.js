@@ -62,6 +62,8 @@ export default class AddGroupForm extends Component {
                 groupname: this.state.groupname,
                 members: this.state.members
               })
+              .then(doc => 
+                firestore.collection("chat").doc(doc.id).set({chits: []}))
               alert("Group Added")
             }}
           />
