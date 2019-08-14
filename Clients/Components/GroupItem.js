@@ -7,6 +7,9 @@ import { ListItem, Icon} from "react-native-elements";
 
 
 class GroupItem extends Component {
+  static navigationOptions = {
+    title: 'Splitzies!'
+  };
   constructor(props) {
     super(props);
   }
@@ -33,6 +36,7 @@ class GroupItem extends Component {
           width="33%"
           backgroundColor="#FA8072"
           onPress={() => {
+            console.log(this.props)
             this.props.navigate("Events", {
               groupId: this.props.id,
               groupname: this.props.group.groupname

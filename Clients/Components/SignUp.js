@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import UserPage from "./UserPage";
+import React, { Component } from 'react';
+import { firestore, auth } from '../../fire';
+import UserPage from './UserPage';
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,20 +8,19 @@ import {
   View,
   TextInput,
   Button
-} from "react-native";
-import styles from "./Style";
-import { firestore } from "../../fire";
+} from 'react-native';
+import styles from './Style';
 
 export default class SignUp extends Component {
   state = {
-    username: "",
-    name: "",
-    password: "",
-    phone: ""
+    username: '',
+    name: '',
+    password: '',
+    email: ''
   };
 
   render() {
-    const { username, name, password, phone } = this.state;
+    const { username, name, password, email } = this.state;
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container_signup_form}>
@@ -39,10 +39,10 @@ export default class SignUp extends Component {
             onChangeText={value => this.setState({ name: value })}
           />
           <TextInput
-            value={phone}
-            placeholder="phone"
+            value={email}
+            placeholder="email"
             style={styles.textInput}
-            onChangeText={value => this.setState({ phone: value })}
+            onChangeText={value => this.setState({ email: value })}
           />
           <TextInput
             value={password}
@@ -50,21 +50,44 @@ export default class SignUp extends Component {
             style={styles.textInput}
             onChangeText={value => this.setState({ password: value })}
           />
+
           <Button
             onPress={() => {
-              alert("User successfully added!");
-              firestore
-                .collection("users")
-                .doc(this.state.username)
-                .set(this.state);
-              firestore
-                .collection("publicUsers")
-                .doc(this.state.username)
-                .set({
-                  username: this.state.username,
-                  name: this.state.name
-                });
-              navigate("UserPage");
+              if (email && password && username && name) {
+                firestore
+                  .collection('publicUsers')
+                  .where('username', '==', username)
+                  .get()
+                  .then(snapshot => {
+                    console.log(snapshot.docs.length);
+                    if (snapshot.docs.length) {
+                      alert('Username already exists');
+                      this.setState({
+                        username: ''
+                      });
+                    } else {
+                      auth
+                        .createUserWithEmailAndPassword(email, password)
+                        .then(user => {
+                          firestore
+                            .collection('publicUsers')
+                            .doc(auth.currentUser.uid)
+                            .set({
+                              username,
+                              name
+                            });
+                          navigate('Groups', {
+                            userId: auth.currentUser.uid
+                          });
+                        })
+                        .catch(function(error) {
+                          var errorMessage = error.message;
+                          alert(errorMessage);
+                        });
+                    }
+                  })
+                  .catch(error => alert(error.message));
+              }
             }}
             title="Add User"
             color="#841584"

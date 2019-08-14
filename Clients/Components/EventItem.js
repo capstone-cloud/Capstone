@@ -5,6 +5,9 @@ import { RectButton } from "react-native-gesture-handler";
 import { ListItem, Icon } from "react-native-elements";
 
 class EventItem extends Component {
+  static navigationOptions = {
+    title: 'Splitzies!'
+  };
   constructor(props) {
     super(props);
   }
