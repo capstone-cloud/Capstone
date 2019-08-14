@@ -20,6 +20,7 @@ class GroupItem extends Component {
           style={styles.leftAction}
           backgroundColor="#FA8072"
           onPress={() => {
+            console.log(this.props)
             this.props.navigate("Events", {
               groupId: this.props.id,
               groupname: this.props.group.groupname
