@@ -10,11 +10,10 @@ import {
 import styles from "./Style";
 import { firestore } from "../../fire";
 
-
 export default class AddGroupForm extends Component {
   state = {
     groupname: "",
-    members: [this.props.navigation.getParam("userId")],
+    members: [this.props.navigation.getParam("username")],
     memberToAdd: ""
   };
 
@@ -40,31 +39,39 @@ export default class AddGroupForm extends Component {
             defaultValue=""
             placeholder="members"
             style={styles.textInput}
-            onChangeText={value => this.setState({memberToAdd: value})}
+            onChangeText={value => this.setState({ memberToAdd: value })}
           />
           <Button
-            title='Add Another'
+            title="Add Another"
             color="purple"
             onPress={() => {
-              this.setState({members: [...this.state.members, this.state.memberToAdd]});
-              this.setState({memberToAdd: ""})
+              this.setState({
+                members: [...this.state.members, this.state.memberToAdd]
+              });
+              this.setState({ memberToAdd: "" });
             }}
-            />
-          
-          <Text>Current Members:</Text>
-          <Text>{this.state.members.join(', ')}</Text>
+          />
 
-          <Button 
+          <Text>Current Members:</Text>
+          <Text>{this.state.members.join(", ")}</Text>
+
+          <Button
             title="Add Group"
             color="purple"
             onPress={() => {
-              firestore.collection("groups").add({
-                groupname: this.state.groupname,
-                members: this.state.members
-              })
-              .then(doc => 
-                firestore.collection("chat").doc(doc.id).set({chits: []}))
-              alert("Group Added")
+              firestore
+                .collection("groups")
+                .add({
+                  groupname: this.state.groupname,
+                  members: this.state.members
+                })
+                .then(doc =>
+                  firestore
+                    .collection("chat")
+                    .doc(doc.id)
+                    .set({ chits: [] })
+                );
+              alert("Group Added");
             }}
           />
         </View>
