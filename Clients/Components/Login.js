@@ -1,34 +1,33 @@
-import React, { Component } from "react";
-import { SafeAreaView, Text, View, TextInput, Button } from "react-native";
-import styles from "./Style";
-import { firestore } from "../../fire";
-import AddGroupForm from "./AddGroupForm";
+import React, { Component } from 'react';
+import { SafeAreaView, Text, View, TextInput, Button } from 'react-native';
+import styles from './Style';
+import { firestore, auth } from '../../fire';
 
 export default class LogIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      email: '',
+      password: ''
     };
   }
 
   static navigationOptions = {
-    title: "Welcome"
+    title: 'Welcome'
   };
 
   render() {
-    const { username, password } = this.state;
+    const { email, password } = this.state;
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
           <Text>Log In</Text>
           <TextInput
-            value={username}
-            placeholder="username"
+            value={email}
+            placeholder="email"
             style={styles.textInput}
-            onChangeText={value => this.setState({ username: value })}
+            onChangeText={value => this.setState({ email: value })}
           />
           <TextInput
             value={password}
@@ -39,43 +38,17 @@ export default class LogIn extends Component {
 
           <Button
             onPress={() => {
-              const userRef = firestore
-                .collection("users")
-                .doc(`${this.state.username}`);
-
-              userRef
-                .get()
-                .then(docSnapshot => {
-                  if (docSnapshot.exists) {
-                    userRef.onSnapshot(doc => {
-                      if (this.state.password !== doc.data().password) {
-                        alert("Wrong log-in info!");
-                      } else {
-                        alert("Signed In!");
-                        navigate("Groups", {
-                          userId: doc.id
-                        });
-                      }
-                    });
-                  } else {
-                    alert("User does not exist");
-                  }
+              auth
+                .signInWithEmailAndPassword(email, password)
+                .then(user => {
+                  navigate('Groups', {
+                    userId: auth.currentUser.uid
+                  });
                 })
-                .catch(error => {
-                  console.error(error);
+                .catch(function(error) {
+                  var errorMessage = error.message;
+                  alert(errorMessage);
                 });
-
-              //   firestore
-              //     .collection("users")
-              //     .doc(this.state.username)
-              //     .set(this.state);
-              //   firestore
-              //     .collection("publicUsers")
-              //     .doc(this.state.username)
-              //     .set({
-              //       username: this.state.username,
-              //       name: this.state.name
-              //     });
             }}
             title="Sign In"
             color="#841584"

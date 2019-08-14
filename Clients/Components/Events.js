@@ -4,6 +4,8 @@ import { ListItem, Card } from "react-native-elements";
 import { firestore } from "../../fire";
 import EventItem from "./EventItem";
 
+
+
 export default class Events extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ export default class Events extends Component {
       .get()
       .then(docs =>
         docs.forEach(doc => {
+          console.log(doc.data())
           this.setState({
             events: [...this.state.events, { id: doc.id, data: doc.data() }]
           });
@@ -49,6 +52,7 @@ export default class Events extends Component {
             navigate("AddEventForm", {
               groupId: this.props.navigation.getParam("groupId")
             });
+         
           }}
           title="Add an event"
           color="black"
