@@ -1,37 +1,37 @@
-import React, { Component } from 'react';
-import UserPage from './UserPage';
+import React, { Component } from "react";
+import UserPage from "./UserPage";
 import {
   StyleSheet,
   SafeAreaView,
   Text,
   View,
   TextInput,
-  Button, 
+  Button,
   ScrollView
 } from "react-native";
 import { ListItem, Card } from "react-native-elements";
 import styles from "./Style";
-import { firestore } from "../../fire";
+import { firestore, auth } from "../../fire";
 import GroupItem from "./GroupItem";
-
 
 export default class Groups extends Component {
   static navigationOptions = {
-    title: 'Splitzies!',
+    title: "Splitzies!",
     headerLeft: null
   };
   constructor(props) {
     super(props);
     this.state = {
-      groups: []
+      groups: [],
+      username: ""
     };
   }
 
   async getUserName() {
     try {
       const user = await firestore
-        .collection('publicUsers')
-        .doc(this.props.navigation.getParam('userId', 'NO-ID'))
+        .collection("publicUsers")
+        .doc(this.props.navigation.getParam("userId", "NO-ID"))
         .get();
 
       return user.data().username;
@@ -42,10 +42,10 @@ export default class Groups extends Component {
 
   async componentDidMount() {
     const username = await this.getUserName();
-
+    this.setState({ username: username });
     firestore
-      .collection('groups')
-      .where('members', 'array-contains', username)
+      .collection("groups")
+      .where("members", "array-contains", username)
       .get()
       .then(docs =>
         docs.forEach(doc => {
@@ -58,9 +58,9 @@ export default class Groups extends Component {
   returnSubtitle(members) {
     let len = members.length;
     if (len < 5) {
-      return members.join(', ');
+      return members.join(", ");
     } else {
-      let FirstThree = members.filter((cur, i) => i < 3).join(', ');
+      let FirstThree = members.filter((cur, i) => i < 3).join(", ");
       return FirstThree + `... and ${len - 3} more`;
     }
   }
@@ -78,14 +78,14 @@ export default class Groups extends Component {
               group={group.data}
               returnSubtitle={this.returnSubtitle}
               navigate={navigate}
-              user={this.props.navigation.getParam("userId")}
+              user={this.state.username}
             />
           ))}
         </Card>
         <Button
           onPress={() => {
-            navigate('AddGroupForm', {
-              userId: this.props.navigation.getParam('userId')
+            navigate("AddGroupForm", {
+              username: this.state.username
             });
           }}
           title="Add a group"
@@ -96,8 +96,8 @@ export default class Groups extends Component {
             auth
               .signOut()
               .then(function() {
-                alert('Signed out!');
-                navigate('Loading');
+                alert("Signed out!");
+                navigate("Loading");
               })
               .catch(function(error) {
                 alert(error.message);
