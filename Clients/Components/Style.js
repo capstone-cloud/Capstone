@@ -36,5 +36,12 @@ export default (styles = StyleSheet.create({
     color: 'yellow',
     fontSize: 30,
     flex: 2
+  },
+  modal: {
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'pink',
+    
   }
 }));

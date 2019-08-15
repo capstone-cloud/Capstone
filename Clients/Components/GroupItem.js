@@ -39,7 +39,8 @@ class GroupItem extends Component {
             console.log(this.props)
             this.props.navigate("Events", {
               groupId: this.props.id,
-              groupname: this.props.group.groupname
+              groupname: this.props.group.groupname,
+              user: this.props.user
             });
           
           }}

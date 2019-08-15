@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import Swipeable from "react-native-gesture-handler/Swipeable";
-import { View, Button, Animated } from "react-native";
-import { RectButton } from "react-native-gesture-handler";
-import { ListItem, Icon } from "react-native-elements";
+import React, { Component } from 'react';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { View, Button, Animated } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import { ListItem, Icon } from 'react-native-elements';
 
 class EventItem extends Component {
   static navigationOptions = {
@@ -18,25 +18,26 @@ class EventItem extends Component {
     });
 
     return (
-      <View 
-      onPress={this.close}
-      style={{
-        flex:0.3,
-        flexDirection:"row",
-        justifyContent: "space-around"
-      }}>
-        
+      <View
+        onPress={this.close}
+        style={{
+          flex: 0.3,
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }}
+      >
         <RectButton
           style={{
-            flex:1,
-            flexDirection:"column",
-            justifyContent:"space-evenly"
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-evenly'
           }}
           width="50%"
           backgroundColor="#FA8072"
           onPress={() => {
-            this.props.navigate("Items", {
-              eventId: this.props.id
+            this.props.navigate('Items', {
+              eventId: this.props.id,
+              user: this.props.user
             });
           }}
         >
@@ -48,22 +49,20 @@ class EventItem extends Component {
               }
             ]}
           >
-          
             Items
-            
           </Animated.Text>
-          <Icon name="assignment"/>
+          <Icon name="assignment" />
         </RectButton>
         <RectButton
           style={{
-            flex:1,
-            flexDirection:"column",
-            justifyContent:"space-evenly"
-                  }}
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-evenly'
+          }}
           width="50%"
           backgroundColor="pink"
           onPress={() => {
-            this.props.navigate("UpdateEvent", {
+            this.props.navigate('UpdateEvent', {
               id: this.props.id,
               eventname: this.props.event.eventname,
               items: this.props.event.items,
@@ -79,11 +78,9 @@ class EventItem extends Component {
               }
             ]}
           >
-          
             Edit
-            
           </Animated.Text>
-          <Icon name="edit"/>
+          <Icon name="edit" />
         </RectButton>
       </View>
     );
@@ -91,10 +88,10 @@ class EventItem extends Component {
   render() {
     return (
       <Swipeable renderRightActions={this.renderRightActions}>
-        <ListItem 
-        title={this.props.event.eventname}
-        rightIcon={{name: 'more', color:"purple"} }
-         />
+        <ListItem
+          title={this.props.event.eventname}
+          rightIcon={{ name: 'more', color: 'purple' }}
+        />
       </Swipeable>
     );
   }

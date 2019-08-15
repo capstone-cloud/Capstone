@@ -33,7 +33,7 @@ export default class Events extends Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate, getParam } = this.props.navigation;
     return (
       <View>
         <Text>{this.state.groupname}</Text>
@@ -45,6 +45,7 @@ export default class Events extends Component {
               event={event.data}
               navigate={navigate}
               groupId={this.props.navigation.getParam('groupId')}
+              user={getParam("user")}
             />
           ))}
         </Card>

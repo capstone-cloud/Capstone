@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,18 +6,18 @@ import {
   View,
   TextInput,
   Button
-} from "react-native";
-import styles from "./Style";
-import { firestore } from "../../fire";
+} from 'react-native';
+import styles from './Style';
+import { firestore } from '../../fire';
 
 
 export default class AddGroupForm extends Component {
   state = {
-    eventname: "",
-    items: [],
-    itemName: "",
-    itemPrice:'',
-    itemQty:''
+    eventname: ''
+    // items: [],
+    // itemName: "",
+    // itemPrice:'',
+    // itemQty:''
   };
 
   render() {
@@ -36,7 +36,7 @@ export default class AddGroupForm extends Component {
             style={styles.textInput}
             onChangeText={value => this.setState({ eventname: value })}
           />
-          <Text>Add Item</Text>
+          {/* <Text>Add Item</Text>
           <TextInput
             value={this.state.itemName}
             defaultValue=""
@@ -76,18 +76,21 @@ export default class AddGroupForm extends Component {
             />
           
           <Text>Current Items:</Text>
-          <Text>{this.state.items.map(item => item.name).join(', ')}</Text>
+          <Text>{this.state.items.map(item => item.name).join(', ')}</Text> */}
 
-          <Button 
+          <Button
             title="Add Event"
             color="purple"
             onPress={() => {
-              firestore.collection("events").add({
+              firestore.collection('events').add({
                 eventname: this.state.eventname,
-                items: this.state.items,
-                groupId: this.props.navigation.getParam("groupId")
-              })
-              alert("Event Added")
+                // items: this.state.items,
+                groupId: this.props.navigation.getParam('groupId')
+              }).catch(error => {
+                console.error(error)
+              });
+              alert('Event Added');
+              navigate('Events');
             }}
           />
         </View>
