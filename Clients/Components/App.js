@@ -1,19 +1,20 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import SignUp from "./SignUp";
-import Loading from "./Loading";
-import LogIn from "./Login";
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import SignUp from './SignUp';
+import Loading from './Loading';
+import LogIn from './Login';
 // import UserPage from "./UserPage";
-import Groups from "./Groups";
-import AddGroupForm from "./AddGroupForm";
-import Events from "./Events";
-import AddEventForm from "./AddEventForm";
-import Items from "./Items";
-import UpdateGroup from "./UpdateGroup";
-import UpdateEvent from "./UpdateEvent";
-import Chat from "./Chat"
+import Groups from './Groups';
+import AddGroupForm from './AddGroupForm';
+import Events from './Events';
+import AddEventForm from './AddEventForm';
+import Items from './Items';
+import UpdateGroup from './UpdateGroup';
+import UpdateEvent from './UpdateEvent';
+import Chat from './Chat';
+import AddModal from './AddModal';
 
 const MainNavigator = createStackNavigator(
   {
@@ -28,16 +29,17 @@ const MainNavigator = createStackNavigator(
     Items: { screen: Items },
     UpdateGroup: { screen: UpdateGroup },
     UpdateEvent: { screen: UpdateEvent },
-    Chat: {screen: Chat}
+    Chat: { screen: Chat },
+    AddModal: { screen: AddModal }
   },
   {
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "pink"
+        backgroundColor: 'pink'
       },
-      headerTintColor: "#fff",
+      headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: "bold"
+        fontWeight: 'bold'
       }
     }
   }
