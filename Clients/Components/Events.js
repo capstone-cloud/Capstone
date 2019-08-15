@@ -52,6 +52,7 @@ export default class Events extends Component {
               event={event.data}
               navigate={navigate}
               groupId={this.props.navigation.getParam('groupId')}
+              groupname= {this.props.navigation.getParam('groupId')}
             />
           ))}
         </Card>
