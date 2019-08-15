@@ -21,15 +21,22 @@ export default class Events extends Component {
     firestore
       .collection('events')
       .where('groupId', '==', this.props.navigation.getParam('groupId'))
-      .get()
-      .then(docs =>
-        docs.forEach(doc => {
-          console.log(doc.data());
+      // .get()
+      // .then(docs =>
+      //   docs.forEach(doc => {
+      //     this.setState({
+      //       events: [...this.state.events, { id: doc.id, data: doc.data() }]
+      //     });
+      //   })
+      // );
+      .onSnapshot(snapshot => {
+        this.setState({events:[]})
+        snapshot.forEach(doc => {
           this.setState({
-            events: [...this.state.events, { id: doc.id, data: doc.data() }]
-          });
+                  events: [...this.state.events, { id: doc.id, data: doc.data() }]
+                });
         })
-      );
+      })
   }
 
   render() {
@@ -51,7 +58,8 @@ export default class Events extends Component {
         <Button
           onPress={() => {
             navigate('AddEventForm', {
-              groupId: this.props.navigation.getParam('groupId')
+              groupId: this.props.navigation.getParam('groupId'),
+              groupname: this.props.navigation.getParam('groupname')
             });
           }}
           title="Add an event"
