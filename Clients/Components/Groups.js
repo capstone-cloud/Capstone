@@ -42,19 +42,26 @@ export default class Groups extends Component {
 
   async componentDidMount() {
     const username = await this.getUserName();
-    this.setState({ username: username });
+    this.setState({ username: username , groups: []});
     firestore
       .collection("groups")
       .where("members", "array-contains", username)
-      .get()
-      .then(docs =>
+      // .get()
+      // .then(docs =>
+      //   docs.forEach(doc => {
+      //     this.setState({
+      //       groups: [...this.state.groups, { id: doc.id, data: doc.data() }]
+      //     });
+      .onSnapshot(docs => {
+        this.setState({groups:[]})
         docs.forEach(doc => {
           this.setState({
             groups: [...this.state.groups, { id: doc.id, data: doc.data() }]
-          });
+          })
         })
-      );
-  }
+        })
+  };
+  
   returnSubtitle(members) {
     let len = members.length;
     if (len < 5) {

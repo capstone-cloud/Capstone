@@ -33,7 +33,7 @@ export default class UpdateEvent extends Component {
             defaultValue={this.state.eventname}
             placeholder="item Name"
             style={styles.textInput}
-            onChangeText={value => this.setState({ itemtoAdd_name: value })}
+            onChangeText={value => this.setState({ eventname: value })}
           />
           <Text>Add Item</Text>
           <TextInput
@@ -134,6 +134,7 @@ export default class UpdateEvent extends Component {
                   items: this.state.items
                 });
               alert("Event Updated");
+              navigate("Events", {groupId: this.props.groupId, groupname:this.props.groupname})
             }}
           />
         </View>

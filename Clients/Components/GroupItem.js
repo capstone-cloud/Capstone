@@ -66,7 +66,8 @@ class GroupItem extends Component {
             this.props.navigate("UpdateGroup", {
               groupname: this.props.group.groupname,
               groupId: this.props.id,
-              members: this.props.group.members
+              members: this.props.group.members,
+              username: this.props.user
             });
           }}
         >

@@ -88,6 +88,7 @@ export default class AddGroupForm extends Component {
                 groupId: this.props.navigation.getParam("groupId")
               })
               alert("Event Added")
+              navigate("Events", {groupId: this.props.navigation.getParam("groupId"), groupname:this.props.navigation.getParam("groupname")})
             }}
           />
         </View>

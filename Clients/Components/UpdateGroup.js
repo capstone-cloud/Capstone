@@ -99,6 +99,7 @@ export default class UpdateGroup extends Component {
                   members: this.state.members
                 });
               alert("Group Updated");
+              navigate("Groups", {username:this.props.navigation.getParam("username")})
             }}
           />
         </View>
