@@ -45,8 +45,12 @@ class Chat extends Component {
         width:'60%',
         borderRadius:5,
         marginBotton:10,
-        alignSelf: item.user===this.state.user? 'flex-start':'flex-end'}}>
-      <Text>
+        alignSelf: item.user===this.state.user? 'flex-start':'flex-end',
+        backgroundColor: item.user===this.state.user? '#1e90ff':'#A9A9A9'}}>
+      <Text style={{
+        fontSize: 20,
+        color: "white"
+      }}>
         {item.user}: {item.message}
       </Text>
       </View>
@@ -58,20 +62,23 @@ class Chat extends Component {
     let {height, width} = Dimensions.get('window')
 
     return (
-      <SafeAreaView>
+      <SafeAreaView
+        style={{flexDirection:"column"}}>
         <FlatList
-        style={{padding:10, height: height*0.8}}
+        style={{paddingBottom:15, height:height*0.8, flexDirection:"column"}}
         data={this.state.messages}
         renderItem={this.renderRow}
         keyExtractor={(item, index)=> index.toString()}
         />
-        <View style={{flextDirection: 'row', alignItems: 'center'}}>
+        <View style={{flextDirection: 'row', alignSelf: 'flex-end', height:height*0.2}}>
         <TextInput
+          style={{flexDirection:"row", width:width*0.8, borderRadius:0.5, borderColor:'black', alignSelf:'flex-start'}}
           value={this.state.text}
           placeholder="Type Message..."
           onChangeText={value => this.handleChange(value)}/>
         <TouchableOpacity
-          onPress={this.onSend}>
+          onPress={this.onSend}
+          style={{ alignSelf:'center', width:width*0.2, alignSelf:'flex-end' }}>
           <Text>Send</Text>
         </TouchableOpacity>
         </View>
