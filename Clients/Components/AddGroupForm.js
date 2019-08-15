@@ -71,7 +71,7 @@ export default class AddGroupForm extends Component {
                     .doc(doc.id)
                     .set({ chits: [] })
                 );
-              alert("Group Added");
+              navigate("Groups", {username:this.props.navigation.getParam('username')})
             }}
           />
         </View>

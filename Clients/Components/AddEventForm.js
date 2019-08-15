@@ -84,13 +84,12 @@ export default class AddGroupForm extends Component {
             onPress={() => {
               firestore.collection('events').add({
                 eventname: this.state.eventname,
-                // items: this.state.items,
                 groupId: this.props.navigation.getParam('groupId')
               }).catch(error => {
                 console.error(error)
               });
-              alert('Event Added');
-              navigate('Events');
+              alert("Event Added")
+              navigate("Events", {groupId: this.props.navigation.getParam("groupId"), groupname:this.props.navigation.getParam("groupname")})
             }}
           />
         </View>
