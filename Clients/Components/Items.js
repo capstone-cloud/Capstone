@@ -14,7 +14,6 @@ export default class Items extends Component {
     super(props);
     this.state = {
       isModalVisible: false,
-
       items: []
     };
   }
@@ -39,12 +38,21 @@ export default class Items extends Component {
 
   render() {
     const { navigate, getParam } = this.props.navigation;
+    const user = getParam('user');
+    let total = 0;
+    let yourTotal = 0;
     return (
       <View>
         <Text>{this.state.name}</Text>
         <Card title="Items">
           {this.state.items &&
-            this.state.items.map((item, i) => (
+            this.state.items.map((item, i) => {
+              let totalP =item.data.itemPrice * item.data.itemQty;
+              total += totalP
+              if (item.data.sharedBy[user]) {
+                  yourTotal += Math.floor((totalP/Object.keys(item.data.sharedBy).length)*100) * (1/100)
+              }
+              return(
               <ListItem
                 key={i}
                 title={`${item.data.itemName} x${item.data.itemQty} : $${item
@@ -57,7 +65,6 @@ export default class Items extends Component {
                 }
                 onPress={() => {
                   let newMembers = item.data.sharedBy;
-                  const user = getParam('user');
                   if (newMembers[user]) {
                     newMembers[user] = false;
                   } else {
@@ -72,7 +79,7 @@ export default class Items extends Component {
                     .update({ sharedBy: newMembers });
                 }}
               />
-            ))}
+            )})}
         </Card>
         <AddModal
           isModalVisible={this.state.isModalVisible}
@@ -87,6 +94,9 @@ export default class Items extends Component {
           title="Add item"
           color="black"
         />
+
+        <Text>TEAM TOTAL:{total}</Text>
+        <Text>Your Total:{yourTotal}</Text>
       </View>
     );
   }

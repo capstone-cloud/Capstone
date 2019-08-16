@@ -53,35 +53,6 @@ class EventItem extends Component {
           </Animated.Text>
           <Icon name="assignment" />
         </RectButton>
-        <RectButton
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'space-evenly'
-          }}
-          width="50%"
-          backgroundColor="pink"
-          onPress={() => {
-            this.props.navigate('UpdateEvent', {
-              id: this.props.id,
-              eventname: this.props.event.eventname,
-              items: this.props.event.items,
-              groupId: this.props.groupId
-            });
-          }}
-        >
-          <Animated.Text
-            style={[
-              styles.actionText,
-              {
-                transform: [{ translateX: trans }]
-              }
-            ]}
-          >
-            Edit
-          </Animated.Text>
-          <Icon name="edit" />
-        </RectButton>
       </View>
     );
   };
