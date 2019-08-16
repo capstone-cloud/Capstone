@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Text, View, TextInput } from 'react-native';
+import { Button, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import styles from './Style';
 import { firestore } from '../../fire';
@@ -16,33 +16,40 @@ export default class AddModal extends Component {
     return (
       <View style={{ flex: 3 }}>
         <Button title="Add Item" onPress={this.toggleModal} />
-        <Modal isVisible={this.props.isModalVisible} transparent={false}>
-          <View style={styles.contained}>
+        <Modal
+          isVisible={this.props.isModalVisible}
+          animationType={'none'}
+          transparent={false}
+        >
+          <View
+            style={styles.modal}
+            width={this.props.width * 0.8}
+            height={this.props.height * 0.5}
+          >
             <Text>Add Item</Text>
             <TextInput
               value={this.state.itemName}
               defaultValue=""
-              placeholder="item name"
-              style={styles.textInput}
+              placeholder="Item Name"
+              style={styles.inputModalForm}
               onChangeText={value => this.setState({ itemName: value })}
             />
             <TextInput
               value={this.state.itemPrice}
               defaultValue=""
-              placeholder="item price(x1)"
-              style={styles.textInput}
+              placeholder="Item Price(x1)"
+              style={styles.inputModalForm}
               onChangeText={value => this.setState({ itemPrice: value })}
             />
             <TextInput
               value={this.state.itemQty}
               defaultValue=""
-              placeholder="item quantity"
-              style={styles.textInput}
+              placeholder="Item Quantity"
+              style={styles.inputModalForm}
               onChangeText={value => this.setState({ itemQty: value })}
             />
-
             <Button
-              title="Add Items"
+              title="Add"
               color="purple"
               onPress={() => {
                 firestore
@@ -53,15 +60,18 @@ export default class AddModal extends Component {
                   .catch(error => {
                     console.error(error);
                   });
-                this.setState({    
-                itemName: '',
-                itemPrice: '',
-                itemQty: '',
-                sharedBy: {}})
-                alert('Item Added');
+                this.setState({
+                  itemName: '',
+                  itemPrice: '',
+                  itemQty: '',
+                  sharedBy: {}
+                });
+                alert('Added Item!');
               }}
             />
-            <Button title="Back" onPress={this.props.toggleModal} />
+            <TouchableOpacity onPress={this.props.toggleModal}>
+              <Text>Back</Text>
+            </TouchableOpacity>
           </View>
         </Modal>
       </View>
