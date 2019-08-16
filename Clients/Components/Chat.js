@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   SafeAreaView,
@@ -49,3 +50,4 @@ class Chat extends Component {
   }
 }
 export default Chat;
+
