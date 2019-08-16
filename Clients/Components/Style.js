@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: '#FFA0A0',
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: 'white',
@@ -11,10 +11,11 @@ export default (styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    color: 'yellow',
+    color: '#F6CC75',
     fontWeight: 'bold',
-    fontSize: 40,
-    paddingBottom: 30
+    fontSize: 60,
+    paddingBottom: 30,
+    fontFamily: 'ChalkboardSE-Bold'
   },
   container_signup_form: {
     flex: 1,
@@ -38,10 +39,26 @@ export default (styles = StyleSheet.create({
     flex: 2
   },
   modal: {
-    height: 150,
     justifyContent: 'center',
+    alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: 'pink',
-    
+    borderRadius: 30
+  },
+  modalHeader: {
+    fontSize: 30,
+    paddingBottom: 20,
+
+    alignSelf: 'center'
+  },
+  inputModalForm: {
+    borderBottomColor: 'black',
+    fontSize: 20,
+    color: 'gray',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    marginBottom: 10,
+    borderBottomWidth: 1
   }
 }));
