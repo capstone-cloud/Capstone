@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
+import { Text, View, Button, Dimensions, ScrollView} from 'react-native';
+import { ListItem, Card, Icon} from 'react-native-elements';
 import { firestore, auth } from '../../fire';
 import Modal from 'react-native-modal';
 import AddModal from './AddModal';
@@ -36,7 +36,19 @@ export default class Items extends Component {
       });
   }
 
+  handleRm(item, index) {
+    let newItem = this.state.items.filter((item, i) => i !== index)
+    firestore
+      .collection('events')
+      .doc(this.props.navigation.getParam('eventId'))
+      .collection('items')
+      .doc(item.id)
+      .delete()
+      .then(alert("Item Deleted!"))
+  }
+
   render() {
+    let {height, width} = Dimensions.get('window')
     const { navigate, getParam } = this.props.navigation;
     const user = getParam('user');
     let total = 0;
@@ -44,7 +56,7 @@ export default class Items extends Component {
     return (
       <View>
         <Text>{this.state.name}</Text>
-        <Card title="Items">
+        <Card title="Items" >
           {this.state.items &&
             this.state.items.map((item, i) => {
               let totalP =item.data.itemPrice * item.data.itemQty;
@@ -53,8 +65,21 @@ export default class Items extends Component {
                   yourTotal += Math.floor((totalP/Object.keys(item.data.sharedBy).length)*100) * (1/100)
               }
               return(
+                <View key={i} style={{
+                  borderRadius: 7,
+                  borderWidth: 2,
+                  borderColor:"black",
+                  overflow: 'hidden',
+                  backgroundColor: item.data.sharedBy[user]?
+                  "blue": "white"
+                }}>
+              <View style={{ borderBottomWidth:3,borderLeftWidth:3, borderColor:"#ff4500", alignSelf:'flex-end'}}>
+              <Icon
+              name='clear'  onPress={()=>this.handleRm(item, i)}/>
+              </View>
               <ListItem
                 key={i}
+        
                 title={`${item.data.itemName} x${item.data.itemQty} : $${item
                   .data.itemPrice * item.data.itemQty}`}
                 subtitle={
@@ -79,6 +104,8 @@ export default class Items extends Component {
                     .update({ sharedBy: newMembers });
                 }}
               />
+
+              </View>
             )})}
         </Card>
         <AddModal
@@ -95,8 +122,8 @@ export default class Items extends Component {
           color="black"
         />
 
-        <Text>TEAM TOTAL:{total}</Text>
-        <Text>Your Total:{yourTotal}</Text>
+        <Text style={{fontSize: 19, marginBottom: 10}}>TEAM TOTAL:    $ {total}</Text>
+        <Text style={{fontSize: 19}}>Your Total:    $ {yourTotal}</Text>
       </View>
     );
   }
