@@ -60,5 +60,40 @@ export default (styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     borderBottomWidth: 1
+  },
+  addItem: {
+    fontSize: 20,
+    color: 'white'
+  },
+  // modalButton: {
+  //   fontSize: 20,
+  //   color: 'white',
+  //   borderBottomColor: 'black'
+  // }
+  button: {
+    backgroundColor: 'pink',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'white',
+    color: 'white',
+    fontSize: 20,
+    width: '40%',
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 8,
+    textAlign: 'center',
+    alignSelf: 'center',
+    position: 'relative'
+  },
+
+  back: {
+    paddingTop: 30,
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center'
+  },
+
+  card: {
+    paddingBottom: 40
   }
 }));
