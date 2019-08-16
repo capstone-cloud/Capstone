@@ -53,10 +53,15 @@ export default class AddModal extends Component {
                   .catch(error => {
                     console.error(error);
                   });
+                this.setState({    
+                itemName: '',
+                itemPrice: '',
+                itemQty: '',
+                sharedBy: {}})
                 alert('Item Added');
               }}
             />
-            <Button title="Submit" onPress={this.props.toggleModal} />
+            <Button title="Back" onPress={this.props.toggleModal} />
           </View>
         </Modal>
       </View>
