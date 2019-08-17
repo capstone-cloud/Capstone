@@ -78,7 +78,7 @@ export default class Items extends Component {
                   style={{
                     borderRadius: 7,
                     borderWidth: 2,
-                    borderColor: 'black',
+                    borderColor: 'gray',
                     overflow: 'hidden',
                     backgroundColor: item.data.sharedBy[user] ? 'blue' : 'white'
                   }}
@@ -88,6 +88,7 @@ export default class Items extends Component {
                       borderBottomWidth: 3,
                       borderLeftWidth: 3,
                       borderColor: '#ff4500',
+                      backgroundColor: 'red',
                       alignSelf: 'flex-end'
                     }}
                   >
@@ -133,7 +134,6 @@ export default class Items extends Component {
         />
         <Button
           onPress={() => {
-            // navigate('AddModal');
             this.toggleModal();
           }}
           title="Add item"
