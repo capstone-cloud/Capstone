@@ -18,9 +18,23 @@ export default class AddEventForm extends Component {
     eventname: ''
   };
 
-  // onPressButton = () => {
-  //   this.setState({ TextInputDisableStatus: false });
-  // };
+  addEvent() {
+    if (this.state.eventname.length > 0) {
+      firestore
+        .collection('events')
+        .add({
+          eventname: this.state.eventname,
+          groupId: this.props.groupId
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      alert('Added Event!');
+    } else {
+      alert('Fill out field!');
+    }
+  }
+
   render() {
     const navigate = this.props.navigate;
     const getParam = this.props.getParam;
@@ -43,22 +57,11 @@ export default class AddEventForm extends Component {
               defaultValue={this.state.event}
               placeholder="Event Name"
               style={styles.inputModalForm}
-              // editable={this.state.TextInputDisableHolder}
               onChangeText={value => this.setState({ eventname: value })}
             />
             <TouchableOpacity
               onPress={() => {
-                firestore
-                  .collection('events')
-                  .add({
-                    eventname: this.state.eventname,
-                    // groupId: getParam('groupId')
-                    groupId: this.props.groupId
-                  })
-                  .catch(error => {
-                    console.error(error);
-                  });
-                alert('Added Event!');
+                this.addEvent();
               }}
             >
               <Text style={styles.button}>Add Event</Text>
