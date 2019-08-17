@@ -2,98 +2,76 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
+  TouchableOpacity,
   Text,
   View,
   TextInput,
-  Button
+  Button,
+  LabelForm
 } from 'react-native';
 import styles from './Style';
+import Modal from 'react-native-modal';
 import { firestore } from '../../fire';
 
-
-export default class AddGroupForm extends Component {
+export default class AddEventForm extends Component {
   state = {
     eventname: ''
-    // items: [],
-    // itemName: "",
-    // itemPrice:'',
-    // itemQty:''
   };
 
+  // onPressButton = () => {
+  //   this.setState({ TextInputDisableStatus: false });
+  // };
   render() {
-    const { name, members } = this.state;
-    const { navigate } = this.props.navigation;
+    const navigate = this.props.navigate;
+    const getParam = this.props.getParam;
 
     return (
-      <SafeAreaView style={styles.container_signup_form}>
-        <View style={styles.inputContainer}>
-          <Text>Add Event</Text>
-          <Text>Add Name</Text>
-          <TextInput
-            value={this.state.eventname}
-            defaultValue={this.state.event}
-            placeholder="Event Name"
-            style={styles.textInput}
-            onChangeText={value => this.setState({ eventname: value })}
-          />
-          {/* <Text>Add Item</Text>
-          <TextInput
-            value={this.state.itemName}
-            defaultValue=""
-            placeholder="item name"
-            style={styles.textInput}
-            onChangeText={value => this.setState({itemName: value})}
-          />
-          <TextInput
-            value={this.state.itemPrice}
-            defaultValue=""
-            placeholder="item price(x1)"
-            style={styles.textInput}
-            onChangeText={value => this.setState({itemPrice: value})}
-          />
-          <TextInput
-            value={this.state.itemQty}
-            defaultValue=''
-            placeholder="item quantity"
-            style={styles.textInput}
-            onChangeText={value => this.setState({itemQty: value})}
-          />
-          <Button
-            title='Add Another'
-            color="purple"
-            onPress={() => {
-              this.setState({items: [...this.state.items, {
-                  name: this.state.itemName,
-                  price: this.state.itemPrice,
-                  qty: this.state.itemQty
-              }]});
-              this.setState({
-                itemName: '',
-                itemPrice: '',
-                itemQty: ''
-              })
-            }}
+      <View style={{ flex: 3 }}>
+        <Button title="Add Event" onPress={this.toggleModal} />
+        <Modal
+          isVisible={this.props.isModalVisible}
+          animationType={'none'}
+          transparent={false}
+        >
+          <View
+            style={styles.modal}
+            width={this.props.width * 0.8}
+            height={this.props.height * 0.5}
+          >
+            <TextInput
+              value={this.state.eventname}
+              defaultValue={this.state.event}
+              placeholder="Event Name"
+              style={styles.inputModalForm}
+              // editable={this.state.TextInputDisableHolder}
+              onChangeText={value => this.setState({ eventname: value })}
             />
-          
-          <Text>Current Items:</Text>
-          <Text>{this.state.items.map(item => item.name).join(', ')}</Text> */}
+            <TouchableOpacity
+              onPress={() => {
+                firestore
+                  .collection('events')
+                  .add({
+                    eventname: this.state.eventname,
+                    // groupId: getParam('groupId')
+                    groupId: this.props.groupId
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+                alert('Added Event!');
+              }}
+            >
+              <Text style={styles.button}>Add Event</Text>
+            </TouchableOpacity>
 
-          <Button
-            title="Add Event"
-            color="purple"
-            onPress={() => {
-              firestore.collection('events').add({
-                eventname: this.state.eventname,
-                groupId: this.props.navigation.getParam('groupId')
-              }).catch(error => {
-                console.error(error)
-              });
-              alert("Event Added")
-              navigate("Events", {groupId: this.props.navigation.getParam("groupId"), groupname:this.props.navigation.getParam("groupname")})
-            }}
-          />
-        </View>
-      </SafeAreaView>
+            {
+              <TouchableOpacity onPress={this.props.toggleModal}>
+                <Text style={styles.back}>Back</Text>
+              </TouchableOpacity>
+            }
+          </View>
+        </Modal>
+      </View>
     );
   }
 }

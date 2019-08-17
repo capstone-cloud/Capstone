@@ -26,7 +26,7 @@ export default class AddModal extends Component {
             width={this.props.width * 0.8}
             height={this.props.height * 0.5}
           >
-            <Text style={styles.addItem}>Add Item</Text>
+           
             <TextInput
               value={this.state.itemName}
               defaultValue=""
@@ -49,8 +49,7 @@ export default class AddModal extends Component {
               onChangeText={value => this.setState({ itemQty: value })}
             />
             <TouchableOpacity
-              // color="purple"
-              // type="outline"
+          
 
               onPress={() => {
                 firestore
@@ -70,7 +69,7 @@ export default class AddModal extends Component {
                 alert('Added Item!');
               }}
             >
-              <Text style={styles.button}>Add</Text>
+              <Text style={styles.button}>Add Item</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.props.toggleModal}>
