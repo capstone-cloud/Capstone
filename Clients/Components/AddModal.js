@@ -12,6 +12,31 @@ export default class AddModal extends Component {
     sharedBy: {}
   };
 
+  addItem() {
+    if (
+      this.state.itemName.length &&
+      this.state.itemPrice.length &&
+      this.state.itemQty.length
+    ) {
+      firestore
+        .collection('events')
+        .doc(this.props.eventId)
+        .collection('items')
+        .add(this.state)
+        .catch(error => {
+          console.error(error);
+        });
+      this.setState({
+        itemName: '',
+        itemPrice: '',
+        itemQty: '',
+        sharedBy: {}
+      });
+      alert('Added Item!');
+    } else {
+      alert('Please fill out all fields!');
+    }
+  }
   render() {
     return (
       <View style={{ flex: 3 }}>
@@ -26,7 +51,6 @@ export default class AddModal extends Component {
             width={this.props.width * 0.8}
             height={this.props.height * 0.5}
           >
-           
             <TextInput
               value={this.state.itemName}
               defaultValue=""
@@ -49,24 +73,8 @@ export default class AddModal extends Component {
               onChangeText={value => this.setState({ itemQty: value })}
             />
             <TouchableOpacity
-          
-
               onPress={() => {
-                firestore
-                  .collection('events')
-                  .doc(this.props.eventId)
-                  .collection('items')
-                  .add(this.state)
-                  .catch(error => {
-                    console.error(error);
-                  });
-                this.setState({
-                  itemName: '',
-                  itemPrice: '',
-                  itemQty: '',
-                  sharedBy: {}
-                });
-                alert('Added Item!');
+                this.addItem();
               }}
             >
               <Text style={styles.button}>Add Item</Text>
