@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   Button,
+  TouchableOpacity,
   ScrollView
 } from 'react-native';
 import { ListItem, Card } from 'react-native-elements';
@@ -76,7 +77,7 @@ export default class Groups extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ScrollView>
-        <Card title="GROUPS">
+        <Card title="GROUPS" style={styles.card}>
           {this.state.groups.map((group, i) => (
             <GroupItem
               key={i}
@@ -88,15 +89,16 @@ export default class Groups extends Component {
             />
           ))}
         </Card>
-        <Button
+        <TouchableOpacity
           onPress={() => {
             navigate('AddGroupForm', {
               username: this.state.username
             });
           }}
-          title="Add a group"
-          color="black"
-        />
+        >
+          <Text style={styles.button}>Add Group</Text>
+        </TouchableOpacity>
+
         <Button
           onPress={() => {
             auth
