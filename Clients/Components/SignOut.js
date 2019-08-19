@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
-import { Button } from 'react-native';
+import React from 'react';
+import styles from './Style';
+import { TouchableOpacity, Text } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { auth } from '../../fire';
 
-export default class SignOut extends Component {
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <div>
-        <Button
-          onPress={() => {
-            auth
-              .signOut()
-              .then(function() {
-                alert('Signed out!');
-                navigate('Loading');
-              })
-              .catch(function(error) {
-                alert(error.message);
-              });
-          }}
-          title="Sign Out"
-        />
-      
-      </div>
-    );
-  }
+function SignOut(props) {
+  return (
+    <Icon
+      name="exit-to-app"
+      color="white"
+      onPress={() => {
+        auth
+          .signOut()
+          .then(function() {
+            props.navigate('Loading');
+            alert('Signed out!');
+          })
+          .catch(function(error) {
+            alert(error.message);
+          });
+      }}
+    />
+    //   style={styles.signOut}
+    //   onPress={() => {
+    //     auth
+    //       .signOut()
+    //       .then(function() {
+    //         props.navigate('Loading');
+    //         alert('Signed out!');
+    //       })
+    //       .catch(function(error) {
+    //         alert(error.message);
+    //       });
+    //   }}
+    // >
+    //   <Text>Sign Out</Text>
+    // </TouchableOpacity>
+  );
 }
+
+export default SignOut;

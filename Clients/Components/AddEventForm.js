@@ -41,7 +41,6 @@ export default class AddEventForm extends Component {
 
     return (
       <View style={{ flex: 3 }}>
-        <Button title="Add Event" onPress={this.toggleModal} />
         <Modal
           isVisible={this.props.isModalVisible}
           animationType={'none'}
@@ -64,7 +63,7 @@ export default class AddEventForm extends Component {
                 this.addEvent();
               }}
             >
-              <Text style={styles.button}>Add Event</Text>
+              <Text style={styles.modalButton}>Add Event</Text>
             </TouchableOpacity>
 
             {

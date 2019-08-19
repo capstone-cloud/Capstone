@@ -3,15 +3,20 @@ import { StyleSheet } from 'react-native';
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFA0A0',
+    backgroundColor: 'lightpink',
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: 'white',
     alignItems: 'center',
     justifyContent: 'center'
   },
+  back: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 13
+  },
   title: {
-    color: '#F6CC75',
+    color: 'yellow',
     fontWeight: 'bold',
     fontSize: 60,
     paddingBottom: 30,
@@ -42,7 +47,7 @@ export default (styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderRadius: 30
   },
   modalHeader: {
@@ -53,7 +58,7 @@ export default (styles = StyleSheet.create({
   },
   inputModalForm: {
     borderBottomColor: 'black',
-    fontSize: 20,
+    fontSize: 25,
     color: 'gray',
     marginLeft: 30,
     marginRight: 30,
@@ -71,7 +76,7 @@ export default (styles = StyleSheet.create({
   //   borderBottomColor: 'black'
   // }
   button: {
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: 'white',
@@ -81,8 +86,25 @@ export default (styles = StyleSheet.create({
     fontWeight: 'bold',
     overflow: 'hidden',
     padding: 8,
+    top: '50%',
     textAlign: 'center',
     alignSelf: 'center',
+    position: 'relative'
+  },
+
+  modalButton: {
+    backgroundColor: 'lightpink',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'white',
+    color: 'white',
+    fontSize: 20,
+    // width: '5%',
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    textAlign: 'center',
+    alignSelf: 'center',
+    top: '40%',
     position: 'relative'
   },
 
@@ -90,10 +112,54 @@ export default (styles = StyleSheet.create({
     paddingTop: 30,
     fontSize: 15,
     color: 'black',
+    top: '30%',
+    fontWeight: 'bold',
     textAlign: 'center'
   },
 
   card: {
     paddingBottom: 40
+  },
+  total: {
+    fontSize: 19,
+    marginBottom: 20,
+    fontFamily: 'Palatino-Bold'
+  },
+  totalContainer: {
+    flex: 3
+  },
+
+  login: {
+    color: 'yellow',
+    fontFamily: 'Palatino-Bold',
+    alignSelf: 'center',
+    fontSize: 20
+  },
+
+  name: {
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '2%'
+  },
+  edit: {
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '1%',
+    alignSelf: 'center'
+  },
+
+  signOut: {
+    fontSize: 15,
+    fontFamily: 'Palatino-Bold',
+    flexWrap: 'nowrap'
+  },
+  retake: {
+    paddingBottom: '10%',
+    paddingTop: '3%',
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '2%',
+    alignSelf: 'center',
+    color: 'white'
   }
 }));

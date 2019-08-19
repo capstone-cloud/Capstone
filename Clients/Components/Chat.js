@@ -1,20 +1,24 @@
-import React, { Component } from "react";
-import { firestore, auth } from "../../fire";
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import React, { Component } from 'react';
+import { firestore, auth } from '../../fire';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import SignOut from './SignOut';
 
 class Chat extends Component {
-  static navigationOptions = {
-    title: "CHAT"
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Chat',
+      headerRight: <SignOut navigate={navigation.navigate} />
+    };
   };
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.navigation.getParam("user"),
+      user: this.props.navigation.getParam('user'),
       messages: []
     };
     this.ref = firestore
-      .collection("chat")
-      .doc(this.props.navigation.getParam("groupId"));
+      .collection('chat')
+      .doc(this.props.navigation.getParam('groupId'));
   }
   componentDidMount() {
     this.unsubscribe = this.ref.onSnapshot(doc => {
@@ -47,18 +51,18 @@ class Chat extends Component {
         {...props}
         wrapperStyle={{
           left: {
-            backgroundColor: "#99D6FB"
+            backgroundColor: '#99D6FB'
           },
           right: {
-            backgroundColor: "pink"
+            backgroundColor: 'pink'
           }
         }}
         textStyle={{
           left: {
-            color: "white"
+            color: 'white'
           },
           right: {
-            color: "white"
+            color: 'white'
           }
         }}
       />
@@ -80,7 +84,7 @@ class Chat extends Component {
       <GiftedChat
         messages={[...this.state.messages].reverse()}
         onSend={messages => this.onSend(messages)}
-        user={{ _id: auth.currentUser.uid, name: this.state.user, avatar: "" }}
+        user={{ _id: auth.currentUser.uid, name: this.state.user, avatar: '' }}
         renderTime={() => {
           return null;
         }}
