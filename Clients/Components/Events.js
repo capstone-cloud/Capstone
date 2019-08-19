@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Text, View, Button, Dimensions } from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
-import { firestore } from '../../fire';
-import EventItem from './EventItem';
-import AddEventForm from './AddEventForm';
+import React, { Component } from "react";
+import { Text, View, Button, Dimensions } from "react-native";
+import { ListItem, Card } from "react-native-elements";
+import { firestore } from "../../fire";
+import EventItem from "./EventItem";
+import AddEventForm from "./AddEventForm";
 
 export default class Events extends Component {
   static navigationOptions = {
-    title: 'Splitzies!'
+    title: "Splitzies!"
   };
   constructor(props) {
     super(props);
     this.state = {
       isModalVisible: false,
       events: [],
-      groupname: ''
+      groupname: ""
     };
   }
   toggleModal = () => {
@@ -22,10 +22,10 @@ export default class Events extends Component {
   };
 
   componentDidMount() {
-    this.setState({ groupname: this.props.navigation.getParam('groupname') });
-    firestore
-      .collection('events')
-      .where('groupId', '==', this.props.navigation.getParam('groupId'))
+    this.setState({ groupname: this.props.navigation.getParam("groupname") });
+    this.unsubscribe = firestore
+      .collection("events")
+      .where("groupId", "==", this.props.navigation.getParam("groupId"))
 
       .onSnapshot(snapshot => {
         this.setState({ events: [] });
@@ -37,8 +37,12 @@ export default class Events extends Component {
       });
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
-    let { height, width } = Dimensions.get('window');
+    let { height, width } = Dimensions.get("window");
     const { navigate, getParam } = this.props.navigation;
     return (
       <View>
@@ -50,16 +54,16 @@ export default class Events extends Component {
               id={event.id}
               event={event.data}
               navigate={navigate}
-              groupId={this.props.navigation.getParam('groupId')}
-              user={getParam('user')}
-              groupname={this.props.navigation.getParam('groupId')}
+              groupId={this.props.navigation.getParam("groupId")}
+              user={getParam("user")}
+              groupname={this.props.navigation.getParam("groupId")}
             />
           ))}
         </Card>
         <AddEventForm
           isModalVisible={this.state.isModalVisible}
           toggleModal={this.toggleModal}
-          groupId={this.props.navigation.getParam('groupId')}
+          groupId={this.props.navigation.getParam("groupId")}
           height={height}
           navigate={navigate}
           getParam={getParam}
