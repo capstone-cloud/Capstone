@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Dimensions } from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native';
 import { ListItem, Card } from 'react-native-elements';
 import { firestore } from '../../fire';
 import EventItem from './EventItem';
+import styles from './Style';
 import AddEventForm from './AddEventForm';
+import SignOut from './SignOut';
 
 export default class Events extends Component {
-  static navigationOptions = {
-    title: 'Splitzies!'
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Events',
+
+      headerRight: <SignOut navigate={navigation.navigate} />
+    };
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +37,7 @@ export default class Events extends Component {
 
   componentDidMount() {
     this.setState({ groupname: this.props.navigation.getParam('groupname') });
-    firestore
+    this.unsubscribe = firestore
       .collection('events')
       .where('groupId', '==', this.props.navigation.getParam('groupId'))
 
@@ -37,52 +51,50 @@ export default class Events extends Component {
       });
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
     let { height, width } = Dimensions.get('window');
     const { navigate, getParam } = this.props.navigation;
     return (
-      <View>
-        <Text>{this.state.groupname}</Text>
-        <Card title="EVENTS">
-          {this.state.events.map((event, i) => (
-            <EventItem
-              key={i}
-              id={event.id}
-              event={event.data}
-              navigate={navigate}
-              groupId={this.props.navigation.getParam('groupId')}
-              user={getParam('user')}
-              groupname={this.props.navigation.getParam('groupId')}
-            />
-          ))}
-        </Card>
-        <AddEventForm
-          isModalVisible={this.state.isModalVisible}
-          toggleModal={this.toggleModal}
-          groupId={this.props.navigation.getParam('groupId')}
-          height={height}
-          navigate={navigate}
-          getParam={getParam}
-          width={width}
-        />
-        {/* <Button
-          onPress={() => {
-            navigate('AddEventForm', {
-              groupId: this.props.navigation.getParam('groupId'),
-            //   groupname: this.props.navigation.getParam('groupname')
-            });
-          }}
-          title="Add an event"
-          color="black"
-        /> */}
-        <Button
-          onPress={() => {
-            this.toggleModal();
-          }}
-          title="Add Event"
-          color="black"
-        />
-      </View>
+      <ScrollView>
+        <View>
+          <Text style={styles.name}>{this.state.groupname}</Text>
+          <Card title="EVENTS">
+            {this.state.events.map((event, i) => (
+              <EventItem
+                key={i}
+                id={event.id}
+                event={event.data}
+                navigate={navigate}
+                groupId={this.props.navigation.getParam('groupId')}
+                user={getParam('user')}
+                groupname={this.props.navigation.getParam('groupId')}
+              />
+            ))}
+          </Card>
+          <AddEventForm
+            isModalVisible={this.state.isModalVisible}
+            toggleModal={this.toggleModal}
+            groupId={this.props.navigation.getParam('groupId')}
+            height={height}
+            navigate={navigate}
+            getParam={getParam}
+            width={width}
+          />
+
+          <TouchableOpacity
+            style={{ paddingBottom: 50 }}
+            onPress={() => {
+              this.toggleModal();
+            }}
+          >
+            <Text style={styles.button}>Add Event</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }

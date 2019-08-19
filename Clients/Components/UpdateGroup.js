@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,16 +6,16 @@ import {
   TextInput,
   Button,
   Picker
-} from "react-native";
-import styles from "./Style";
-import { firestore } from "../../fire";
+} from 'react-native';
+import styles from './Style';
+import { firestore } from '../../fire';
 
 export default class UpdateGroup extends Component {
   state = {
-    groupname: this.props.navigation.getParam("groupname"),
-    members: this.props.navigation.getParam("members"),
-    memberToAdd: "",
-    memberToRemove: "Click to Select"
+    groupname: this.props.navigation.getParam('groupname'),
+    members: this.props.navigation.getParam('members'),
+    memberToAdd: '',
+    memberToRemove: 'Click to Select'
   };
   render() {
     const { name, members } = this.state;
@@ -24,7 +24,7 @@ export default class UpdateGroup extends Component {
     return (
       <SafeAreaView style={styles.container_signup_form}>
         <View style={styles.inputContainer}>
-          <Text>Edit Group</Text>
+          <Text style={styles.edit}>Edit Group</Text>
           <Text>Change Name</Text>
           <TextInput
             value={this.state.groupname}
@@ -43,12 +43,12 @@ export default class UpdateGroup extends Component {
           />
           <Button
             title="Add Another"
-            color="purple"
+            color="blue"
             onPress={() => {
               this.setState({
                 members: [...this.state.members, this.state.memberToAdd]
               });
-              this.setState({ memberToAdd: "" });
+              this.setState({ memberToAdd: '' });
             }}
           />
 
@@ -56,10 +56,10 @@ export default class UpdateGroup extends Component {
 
           <Picker
             itemStyle={{
-              color: "black",
-              backgroundColor: "pink",
+              color: 'black',
+              backgroundColor: 'pink',
               fontSize: 24,
-              height: "40%"
+              height: '40%'
             }}
             selectedValue={this.state.memberToRemove}
             onValueChange={value => this.setState({ memberToRemove: value })}
@@ -72,7 +72,7 @@ export default class UpdateGroup extends Component {
 
           <Button
             title="Remove"
-            color="purple"
+            color="blue"
             onPress={() => {
               let newMem = this.state.members.filter(
                 member => member !== this.state.memberToRemove
@@ -80,26 +80,28 @@ export default class UpdateGroup extends Component {
               this.setState({
                 members: newMem
               });
-              this.setState({ memberToRemove: "" });
+              this.setState({ memberToRemove: '' });
             }}
           />
 
           <Text>Current Members:</Text>
-          <Text>{this.state.members.join(", ")}</Text>
+          <Text>{this.state.members.join(', ')}</Text>
 
           <Button
             title="Finalize Group"
-            color="purple"
+            color="blue"
             onPress={() => {
               firestore
-                .collection("groups")
-                .doc(this.props.navigation.getParam("groupId"))
+                .collection('groups')
+                .doc(this.props.navigation.getParam('groupId'))
                 .set({
                   groupname: this.state.groupname,
                   members: this.state.members
                 });
-              alert("Group Updated");
-              navigate("Groups", {username:this.props.navigation.getParam("username")})
+              alert('Group Updated');
+              navigate('Groups', {
+                username: this.props.navigation.getParam('username')
+              });
             }}
           />
         </View>

@@ -14,12 +14,19 @@ import { ListItem, Card } from 'react-native-elements';
 import styles from './Style';
 import { firestore, auth } from '../../fire';
 import GroupItem from './GroupItem';
+import SignOut from './SignOut';
 
 export default class Groups extends Component {
-  static navigationOptions = {
-    title: 'Splitzies!',
-    headerLeft: null
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Groups',
+      headerLeft: null,
+      headerRight: (
+        <SignOut style={styles.name} navigate={navigation.navigate} />
+      )
+    };
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +51,7 @@ export default class Groups extends Component {
   async componentDidMount() {
     const username = await this.getUserName();
     this.setState({ username: username, groups: [] });
-    firestore
+    this.unsubscribe = firestore
       .collection('groups')
       .where('members', 'array-contains', username)
       // .get()
@@ -61,6 +68,10 @@ export default class Groups extends Component {
           });
         });
       });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   returnSubtitle(members) {
@@ -90,6 +101,7 @@ export default class Groups extends Component {
           ))}
         </Card>
         <TouchableOpacity
+          style={{ paddingBottom: 50 }}
           onPress={() => {
             navigate('AddGroupForm', {
               username: this.state.username
@@ -98,21 +110,6 @@ export default class Groups extends Component {
         >
           <Text style={styles.button}>Add Group</Text>
         </TouchableOpacity>
-
-        <Button
-          onPress={() => {
-            auth
-              .signOut()
-              .then(function() {
-                alert('Signed out!');
-                navigate('Loading');
-              })
-              .catch(function(error) {
-                alert(error.message);
-              });
-          }}
-          title="Sign Out"
-        />
       </ScrollView>
     );
   }

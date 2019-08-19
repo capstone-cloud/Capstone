@@ -15,6 +15,7 @@ import UpdateGroup from './UpdateGroup';
 import UpdateEvent from './UpdateEvent';
 import Chat from './Chat';
 import AddModal from './AddModal';
+import OurCamera from './OurCamera'
 
 const MainNavigator = createStackNavigator(
   {
@@ -30,12 +31,13 @@ const MainNavigator = createStackNavigator(
     UpdateGroup: { screen: UpdateGroup },
     UpdateEvent: { screen: UpdateEvent },
     Chat: { screen: Chat },
-    AddModal: { screen: AddModal }
+    AddModal: { screen: AddModal },
+    OurCamera: {screen: OurCamera}
   },
   {
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: 'pink'
+        backgroundColor: 'lightpink'
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
