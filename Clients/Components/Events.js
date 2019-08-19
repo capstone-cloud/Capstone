@@ -12,11 +12,17 @@ import { firestore } from '../../fire';
 import EventItem from './EventItem';
 import styles from './Style';
 import AddEventForm from './AddEventForm';
+import SignOut from './SignOut';
 
 export default class Events extends Component {
-  static navigationOptions = {
-    title: 'Splitzies!'
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Events',
+
+      headerRight: <SignOut navigate={navigation.navigate} />
+    };
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +37,7 @@ export default class Events extends Component {
 
   componentDidMount() {
     this.setState({ groupname: this.props.navigation.getParam('groupname') });
-    firestore
+    this.unsubscribe = firestore
       .collection('events')
       .where('groupId', '==', this.props.navigation.getParam('groupId'))
 
@@ -43,6 +49,10 @@ export default class Events extends Component {
           });
         });
       });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {
@@ -76,6 +86,7 @@ export default class Events extends Component {
           />
 
           <TouchableOpacity
+            style={{ paddingBottom: 50 }}
             onPress={() => {
               this.toggleModal();
             }}

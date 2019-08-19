@@ -12,31 +12,31 @@ export default class AddModal extends Component {
     sharedBy: {}
   };
 
-  addItem() {
-    if (
-      this.state.itemName.length &&
-      this.state.itemPrice.length &&
-      this.state.itemQty.length
-    ) {
-      firestore
-        .collection('events')
-        .doc(this.props.eventId)
-        .collection('items')
-        .add(this.state)
-        .catch(error => {
-          console.error(error);
-        });
-      this.setState({
-        itemName: '',
-        itemPrice: '',
-        itemQty: '',
-        sharedBy: {}
-      });
-      alert('Added Item!');
-    } else {
-      alert('Please fill out all fields!');
-    }
-  }
+  //  addItem() {
+  //   if (
+  //     this.state.itemName.length &&
+  //     this.state.itemPrice.length &&
+  //     this.state.itemQty.length
+  //   ) {
+  //      firestore
+  //       .collection('events')
+  //       .doc(this.props.eventId)
+  //       .collection('items')
+  //       .add(this.state)
+  //       .catch(error => {
+  //         console.error(error);
+  //       });
+  //     this.setState({
+  //       itemName: '',
+  //       itemPrice: '',
+  //       itemQty: '',
+  //       sharedBy: {}
+  //     });
+  //     alert('Added Item!');
+  //   } else {
+  //     alert('Please fill out all fields!');
+  //   }
+  // }
   render() {
     return (
       <View style={{ flex: 3 }}>
@@ -74,7 +74,22 @@ export default class AddModal extends Component {
             />
             <TouchableOpacity
               onPress={() => {
-                this.addItem();
+                // this.addItem();
+                firestore
+                  .collection('events')
+                  .doc(this.props.eventId)
+                  .collection('items')
+                  .add(this.state)
+                  .catch(error => {
+                    console.error(error);
+                  });
+                this.setState({
+                  itemName: '',
+                  itemPrice: '',
+                  itemQty: '',
+                  sharedBy: {}
+                });
+                alert('Added Item!');
               }}
             >
               <Text style={styles.modalButton}>Add Item</Text>

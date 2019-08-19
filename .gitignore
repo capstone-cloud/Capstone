@@ -1,4 +1,5 @@
-fire/
+fire.js
+Constants.js
 node_modules/**/*
 .expo/*
 npm-debug.*

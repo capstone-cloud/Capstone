@@ -5,9 +5,6 @@ import { RectButton } from 'react-native-gesture-handler';
 import { ListItem, Icon } from 'react-native-elements';
 
 class EventItem extends Component {
-  static navigationOptions = {
-    title: 'Splitzies!'
-  };
   constructor(props) {
     super(props);
   }
@@ -21,7 +18,7 @@ class EventItem extends Component {
       <View
         onPress={this.close}
         style={{
-          flex: 0.3,
+          flex: 0.4,
           flexDirection: 'row',
           justifyContent: 'space-around'
         }}
@@ -37,7 +34,10 @@ class EventItem extends Component {
           onPress={() => {
             this.props.navigate('Items', {
               eventId: this.props.id,
-              user: this.props.user
+              user: this.props.user,
+              eventname: this.props.event.eventname,
+              groupId: this.props.groupId,
+              groupname: this.props.groupname
             });
           }}
         >
@@ -52,6 +52,34 @@ class EventItem extends Component {
             Items
           </Animated.Text>
           <Icon name="assignment" />
+        </RectButton>
+        <RectButton
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-evenly'
+          }}
+          width="50%"
+          backgroundColor="plum"
+          onPress={() => {
+            this.props.navigate('OurCamera', {
+              eventId: this.props.id,
+              user: this.props.user,
+              eventname: this.props.event.eventname
+            });
+          }}
+        >
+          <Animated.Text
+            style={[
+              styles.actionText,
+              {
+                transform: [{ translateX: trans }]
+              }
+            ]}
+          >
+            Scanner
+          </Animated.Text>
+          <Icon name="camera-alt" />
         </RectButton>
       </View>
     );

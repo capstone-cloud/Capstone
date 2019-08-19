@@ -3,19 +3,24 @@ import { StyleSheet } from 'react-native';
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: 'white',
     alignItems: 'center',
     justifyContent: 'center'
   },
+  back: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 13
+  },
   title: {
     color: 'yellow',
     fontWeight: 'bold',
     fontSize: 60,
     paddingBottom: 30,
-    fontFamily: 'Palatino-Bold'
+    fontFamily: 'ChalkboardSE-Bold'
   },
   container_signup_form: {
     flex: 1,
@@ -42,7 +47,7 @@ export default (styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderRadius: 30
   },
   modalHeader: {
@@ -71,7 +76,7 @@ export default (styles = StyleSheet.create({
   //   borderBottomColor: 'black'
   // }
   button: {
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: 'white',
@@ -88,7 +93,7 @@ export default (styles = StyleSheet.create({
   },
 
   modalButton: {
-    backgroundColor: 'pink',
+    backgroundColor: 'lightpink',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: 'white',
@@ -118,8 +123,10 @@ export default (styles = StyleSheet.create({
   total: {
     fontSize: 19,
     marginBottom: 20,
-    top: '10%',
     fontFamily: 'Palatino-Bold'
+  },
+  totalContainer: {
+    flex: 3
   },
 
   login: {
@@ -133,5 +140,26 @@ export default (styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Palatino-Bold',
     top: '2%'
+  },
+  edit: {
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '1%',
+    alignSelf: 'center'
+  },
+
+  signOut: {
+    fontSize: 15,
+    fontFamily: 'Palatino-Bold',
+    flexWrap: 'nowrap'
+  },
+  retake: {
+    paddingBottom: '10%',
+    paddingTop: '3%',
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '2%',
+    alignSelf: 'center',
+    color: 'white'
   }
 }));
