@@ -61,7 +61,7 @@ class EventItem extends Component {
       <Swipeable renderRightActions={this.renderRightActions}>
         <ListItem
           title={this.props.event.eventname}
-          rightIcon={{ name: 'more', color: 'purple' }}
+          rightIcon={{ name: 'more', color: 'pink' }}
         />
       </Swipeable>
     );

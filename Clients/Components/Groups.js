@@ -14,11 +14,13 @@ import { ListItem, Card } from 'react-native-elements';
 import styles from './Style';
 import { firestore, auth } from '../../fire';
 import GroupItem from './GroupItem';
+// import SignOut from './SignOut';
 
 export default class Groups extends Component {
   static navigationOptions = {
     title: 'Splitzies!',
     headerLeft: null
+    // headerRight: <SignOut navigation={navigation} />
   };
   constructor(props) {
     super(props);
@@ -77,6 +79,7 @@ export default class Groups extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ScrollView>
+   
         <Card title="GROUPS" style={styles.card}>
           {this.state.groups.map((group, i) => (
             <GroupItem

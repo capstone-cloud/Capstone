@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFA0A0',
+    backgroundColor: 'pink',
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: 'white',
@@ -11,11 +11,11 @@ export default (styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    color: '#F6CC75',
+    color: 'yellow',
     fontWeight: 'bold',
     fontSize: 60,
     paddingBottom: 30,
-    fontFamily: 'ChalkboardSE-Bold'
+    fontFamily: 'Palatino-Bold'
   },
   container_signup_form: {
     flex: 1,
@@ -53,7 +53,7 @@ export default (styles = StyleSheet.create({
   },
   inputModalForm: {
     borderBottomColor: 'black',
-    fontSize: 20,
+    fontSize: 25,
     color: 'gray',
     marginLeft: 30,
     marginRight: 30,
@@ -81,8 +81,25 @@ export default (styles = StyleSheet.create({
     fontWeight: 'bold',
     overflow: 'hidden',
     padding: 8,
+    top: '50%',
     textAlign: 'center',
     alignSelf: 'center',
+    position: 'relative'
+  },
+
+  modalButton: {
+    backgroundColor: 'pink',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'white',
+    color: 'white',
+    fontSize: 20,
+    // width: '5%',
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    textAlign: 'center',
+    alignSelf: 'center',
+    top: '40%',
     position: 'relative'
   },
 
@@ -90,10 +107,31 @@ export default (styles = StyleSheet.create({
     paddingTop: 30,
     fontSize: 15,
     color: 'black',
+    top: '30%',
+    fontWeight: 'bold',
     textAlign: 'center'
   },
 
   card: {
     paddingBottom: 40
+  },
+  total: {
+    fontSize: 19,
+    marginBottom: 20,
+    top: '10%',
+    fontFamily: 'Palatino-Bold'
+  },
+
+  login: {
+    color: 'yellow',
+    fontFamily: 'Palatino-Bold',
+    alignSelf: 'center',
+    fontSize: 20
+  },
+
+  name: {
+    fontSize: 20,
+    fontFamily: 'Palatino-Bold',
+    top: '2%'
   }
 }));

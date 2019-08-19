@@ -40,7 +40,6 @@ export default class AddModal extends Component {
   render() {
     return (
       <View style={{ flex: 3 }}>
-        <Button title="Add Item" onPress={this.toggleModal} />
         <Modal
           isVisible={this.props.isModalVisible}
           animationType={'none'}
@@ -65,6 +64,7 @@ export default class AddModal extends Component {
               style={styles.inputModalForm}
               onChangeText={value => this.setState({ itemPrice: value })}
             />
+
             <TextInput
               value={this.state.itemQty}
               defaultValue=""
@@ -77,7 +77,7 @@ export default class AddModal extends Component {
                 this.addItem();
               }}
             >
-              <Text style={styles.button}>Add Item</Text>
+              <Text style={styles.modalButton}>Add Item</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.props.toggleModal}>
