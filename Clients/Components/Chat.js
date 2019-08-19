@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { firestore, auth } from "../../fire";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Bubble } from "react-native-gifted-chat";
 
 class Chat extends Component {
   static navigationOptions = {
@@ -17,7 +17,7 @@ class Chat extends Component {
       .doc(this.props.navigation.getParam("groupId"));
   }
   componentDidMount() {
-    this.ref.onSnapshot(doc => {
+    this.unsubscribe = this.ref.onSnapshot(doc => {
       const messages = [];
       doc.data().chits.forEach(chit => {
         let date = new Date(chit.createdAt.seconds * 1000);
@@ -28,12 +28,41 @@ class Chat extends Component {
           user: chit.user
         });
       });
-      this.setState(previousState => {
-        return {
-          messages: GiftedChat.append([], messages)
-        };
-      });
+      // this.setState(previousState => {
+      //   return {
+      //     messages: GiftedChat.append([], messages)
+      //   };
+      // });
+      this.setState({ messages });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: "#99D6FB"
+          },
+          right: {
+            backgroundColor: "pink"
+          }
+        }}
+        textStyle={{
+          left: {
+            color: "white"
+          },
+          right: {
+            color: "white"
+          }
+        }}
+      />
+    );
   }
 
   onSend = messages => {
@@ -55,6 +84,7 @@ class Chat extends Component {
         renderTime={() => {
           return null;
         }}
+        renderBubble={this.renderBubble}
       />
     );
   }

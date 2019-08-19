@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import UserPage from './UserPage';
+import React, { Component } from "react";
+import UserPage from "./UserPage";
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,30 +9,30 @@ import {
   Button,
   TouchableOpacity,
   ScrollView
-} from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
-import styles from './Style';
-import { firestore, auth } from '../../fire';
-import GroupItem from './GroupItem';
+} from "react-native";
+import { ListItem, Card } from "react-native-elements";
+import styles from "./Style";
+import { firestore, auth } from "../../fire";
+import GroupItem from "./GroupItem";
 
 export default class Groups extends Component {
   static navigationOptions = {
-    title: 'Splitzies!',
+    title: "Splitzies!",
     headerLeft: null
   };
   constructor(props) {
     super(props);
     this.state = {
       groups: [],
-      username: ''
+      username: ""
     };
   }
 
   async getUserName() {
     try {
       const user = await firestore
-        .collection('publicUsers')
-        .doc(this.props.navigation.getParam('userId', 'NO-ID'))
+        .collection("publicUsers")
+        .doc(this.props.navigation.getParam("userId", "NO-ID"))
         .get();
 
       return user.data().username;
@@ -44,9 +44,9 @@ export default class Groups extends Component {
   async componentDidMount() {
     const username = await this.getUserName();
     this.setState({ username: username, groups: [] });
-    firestore
-      .collection('groups')
-      .where('members', 'array-contains', username)
+    this.unsubscribe = firestore
+      .collection("groups")
+      .where("members", "array-contains", username)
       // .get()
       // .then(docs =>
       //   docs.forEach(doc => {
@@ -63,12 +63,16 @@ export default class Groups extends Component {
       });
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   returnSubtitle(members) {
     let len = members.length;
     if (len < 5) {
-      return members.join(', ');
+      return members.join(", ");
     } else {
-      let FirstThree = members.filter((cur, i) => i < 3).join(', ');
+      let FirstThree = members.filter((cur, i) => i < 3).join(", ");
       return FirstThree + `... and ${len - 3} more`;
     }
   }
@@ -91,7 +95,7 @@ export default class Groups extends Component {
         </Card>
         <TouchableOpacity
           onPress={() => {
-            navigate('AddGroupForm', {
+            navigate("AddGroupForm", {
               username: this.state.username
             });
           }}
@@ -104,8 +108,8 @@ export default class Groups extends Component {
             auth
               .signOut()
               .then(function() {
-                alert('Signed out!');
-                navigate('Loading');
+                alert("Signed out!");
+                navigate("Loading");
               })
               .catch(function(error) {
                 alert(error.message);
