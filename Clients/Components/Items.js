@@ -195,15 +195,14 @@ export default class Items extends Component {
               this.state.items.map((item, i) => {
                 let totalP = item.data.itemPrice * item.data.itemQty;
                 total += totalP;
+                let shareLen = Object.keys(item.data.sharedBy).filter(
+                  member => item.data.sharedBy[member] === true
+                ).length
                 if (item.data.sharedBy[user]) {
                   yourTotal +=
-                    Math.floor(
-                      (totalP /
-                        Object.keys(item.data.sharedBy).filter(
-                          member => item.data.sharedBy[member] === true
-                        ).length) *
-                        100
-                    ) *
+                    Math.floor
+                      ((totalP / shareLen).toFixed(2)* 100)      
+                     *
                     (1 / 100);
                 }
                 return (
